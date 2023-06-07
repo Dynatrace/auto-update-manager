@@ -17,10 +17,10 @@ export const HostTable = () => {
     return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
   }
 
-  const cols:TableColumn[] = [
+  const cols: TableColumn[] = [
     { accessor: "scope", header: "Scope", cell: ({ value }) => <HostLink hostid={value} />, autoWidth: true },
-    { accessor: "value.updateMode", header: "Update Mode", width: COL_WIDTH },
-    { accessor: "value.targetVersion", header: "Target Version", width: COL_WIDTH },
+    { accessor: "value.updateMode", header: "Update Mode" },
+    { accessor: "value.targetVersion", header: "Target Version" },
     {
       accessor: "value.maintenanceWindows",
       header: "Update Windows",
@@ -28,5 +28,9 @@ export const HostTable = () => {
     },
   ];
 
-  return <DataTable columns={cols} data={data} />;
+  return (
+    <DataTable columns={cols} data={data} fullWidth>
+      <DataTable.Pagination defaultPageSize={10} />
+    </DataTable>
+  );
 };

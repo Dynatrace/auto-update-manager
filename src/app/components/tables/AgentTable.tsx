@@ -33,21 +33,21 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
       .filter((h) => h.updateStatus != undefined)
       .filter((h) => h.hostInfo?.agentVersion != undefined);
 
-      //coming from prop change
-      if (!outdatedAgents.isError && !outdatedAgents.isLoading) {
-        switch (agentSpecialFilter) {
-          case "faulty":
-            tmpData = tmpData.filter((h) => outdatedAgents.faultyAgents.includes(h));
-            break;
-          case "unsupported":
-            // debugger;
-            tmpData = tmpData.filter((h) => outdatedAgents.unsupported.includes(h));
-            break;
-          case "older":
-            tmpData = tmpData.filter((h) => outdatedAgents.older.includes(h));
-            break;
-        }
+    //coming from prop change
+    if (!outdatedAgents.isError && !outdatedAgents.isLoading) {
+      switch (agentSpecialFilter) {
+        case "faulty":
+          tmpData = tmpData.filter((h) => outdatedAgents.faultyAgents.includes(h));
+          break;
+        case "unsupported":
+          // debugger;
+          tmpData = tmpData.filter((h) => outdatedAgents.unsupported.includes(h));
+          break;
+        case "older":
+          tmpData = tmpData.filter((h) => outdatedAgents.older.includes(h));
+          break;
       }
+    }
 
     if (filters)
       for (const f of Object.keys(filters)) {
@@ -101,23 +101,22 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
     if (agents.data) {
       filterData();
     } else setFilteredData([]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agents.data, agentSpecialFilter]);
 
   if (agents.isError) return <Indicator state="critical">{(agents.error as object).toString()}</Indicator>;
   if (agents.isLoading) return <LoadingIndicator />;
 
   const cols: TableColumn[] = [
-    { header: "Status", ratioWidth: 1.5, accessor: "updateStatus", cell: safetyCell },
+    { header: "Status", accessor: "updateStatus", cell: safetyCell, autoWidth: true },
     {
       header: "Version",
-      ratioWidth: 2,
       accessor: "hostInfo.agentVersion",
       cell: ({ value }) => agentVersionToString(value),
     },
-    { header: "Name", ratioWidth: 1.5, accessor: "hostInfo.displayName", cell: safetyCell },
-    { header: "Hostgroup", ratioWidth: 1.5, accessor: "hostInfo.hostGroup.name", cell: safetyCell },
-    { header: "OS", ratioWidth: 0.5, accessor: "hostInfo.osType", cell: safetyCell },
+    { header: "Name", accessor: "hostInfo.displayName", cell: safetyCell },
+    { header: "Hostgroup", accessor: "hostInfo.hostGroup.name", cell: safetyCell },
+    { header: "OS", accessor: "hostInfo.osType", cell: safetyCell },
     // { header: "AutoInjection", accessor: "hostInfo.autoInjection", cell: safetyCell },
     { header: "NetZone", accessor: "currentNetworkZoneId", cell: safetyCell },
   ];
@@ -201,7 +200,7 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
           </Select>
         </FilterBar.Item>
       </FilterBar>
-      <DataTable data={filteredData} columns={cols} sortable lineWrap={true}>
+      <DataTable data={filteredData} columns={cols} sortable lineWrap={true} fullWidth>
         <DataTable.Pagination defaultPageSize={10} />
       </DataTable>
     </Flex>

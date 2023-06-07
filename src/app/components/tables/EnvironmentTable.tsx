@@ -15,12 +15,20 @@ export const EnvironmentTable = () => {
     return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
   }
 
-  const cols:TableColumn[] = [
+  const cols: TableColumn[] = [
     { accessor: "scope", header: "Scope", autoWidth: true },
-    { accessor: "value.updateMode", header: "Update Mode", },
-    { accessor: "value.targetVersion", header: "Target Version",  },
-    { accessor: "value.maintenanceWindows", header: "Update Windows", cell: ({value})=><MaintenanceWindowCell windows={value}/>},
+    { accessor: "value.updateMode", header: "Update Mode" },
+    { accessor: "value.targetVersion", header: "Target Version" },
+    {
+      accessor: "value.maintenanceWindows",
+      header: "Update Windows",
+      cell: ({ value }) => <MaintenanceWindowCell windows={value} />,
+    },
   ];
 
-  return <DataTable columns={cols} data={data} />;
+  return (
+    <div>
+      <DataTable columns={cols} data={data} fullWidth />
+    </div>
+  );
 };

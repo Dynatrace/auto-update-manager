@@ -48,7 +48,7 @@ export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetai
     {
       header: "Hostgroup",
       cell: ({ row }) => <HostGroupLink hostgroup={row.original} />,
-      autoWidth: true,
+      autoWidth: true
     },
     {
       header: "Update Mode",
@@ -96,7 +96,7 @@ export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetai
   // debugger;
   return (
     <Flex flexDirection="column">
-      <DataTable columns={cols} data={hgWithSettings}>
+      <DataTable columns={cols} data={hgWithSettings} fullWidth>
         <DataTable.Pagination defaultPageSize={10} />
       </DataTable>
       {hgWithoutSettings?.length > 0 && (

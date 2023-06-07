@@ -24,10 +24,15 @@ export const HostGroupTable = () => {
     return hg;
   }
 
-  const cols:TableColumn[] = [
-    { accessor: "scope", header: "Scope", cell: ({ value }) => <HostGroupLink hostgroup={getHostGroup(value)} />, autoWidth: true },
-    { accessor: "value.updateMode", header: "Update Mode",  },
-    { accessor: "value.targetVersion", header: "Target Version", },
+  const cols: TableColumn[] = [
+    {
+      accessor: "scope",
+      header: "Scope",
+      cell: ({ value }) => <HostGroupLink hostgroup={getHostGroup(value)} />,
+      autoWidth: true,
+    },
+    { accessor: "value.updateMode", header: "Update Mode" },
+    { accessor: "value.targetVersion", header: "Target Version" },
     {
       accessor: "value.maintenanceWindows",
       header: "Update Windows",
@@ -35,5 +40,9 @@ export const HostGroupTable = () => {
     },
   ];
 
-  return <DataTable columns={cols} data={data} />;
+  return (
+    <DataTable columns={cols} data={data} fullWidth>
+      <DataTable.Pagination defaultPageSize={10} />
+    </DataTable>
+  );
 };
