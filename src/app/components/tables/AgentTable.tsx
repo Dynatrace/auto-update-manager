@@ -116,7 +116,7 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
     },
     { header: "Name", accessor: "hostInfo.displayName", cell: safetyCell },
     { header: "Hostgroup", accessor: "hostInfo.hostGroup.name", cell: safetyCell },
-    { header: "OS", accessor: "hostInfo.osType", cell: safetyCell },
+    { header: "OS", accessor: "hostInfo.osType", cell: safetyCell, autoWidth: true },
     // { header: "AutoInjection", accessor: "hostInfo.autoInjection", cell: safetyCell },
     { header: "NetZone", accessor: "currentNetworkZoneId", cell: safetyCell },
   ];
