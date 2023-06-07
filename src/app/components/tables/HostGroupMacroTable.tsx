@@ -23,17 +23,22 @@ export const HostGroupMacroTable = () => {
     },
     { accessor: "name", header: "Name", autoWidth: true },
     { accessor: "filter", header: "Filter" },
-    { accessor: "updateMode", header: "Update Mode", autoWidth: true },
-    { accessor: "desiredVersion", header: "Version", cell: ({ value }) => <VersionCell version={value} /> },
+    { accessor: "updateMode", header: "Update Mode" },
+    {
+      accessor: "desiredVersion",
+      header: "Version",
+      cell: ({ value }) => <VersionCell version={value} />,
+      autoWidth: true,
+    },
     { accessor: "desiredWindow", header: "Window", cell: ({ value }) => <MaintenanceWindowCell window={value} /> },
     { id: "hostgroups", header: "Host Groups", cell: ({ row }) => <HostGroupCell macro={row.original as Macro} /> },
-    { id: "actions", header: "", alignment:"right", cell: ({ row }) => <ActionsCell macro={row.original as Macro} /> },
+    { id: "actions", header: "", alignment: "right", cell: ({ row }) => <ActionsCell macro={row.original as Macro} /> },
   ];
-    if (macros.isError) return <Indicator state="critical">{(macros.error||"").toString()}</Indicator>;
-    else if(macros.isLoading) return <LoadingIndicator/>
+  if (macros.isError) return <Indicator state="critical">{(macros.error || "").toString()}</Indicator>;
+  else if (macros.isLoading) return <LoadingIndicator />;
   if (Array.isArray(macros.data))
     return (
-      <DataTable columns={cols} data={macros.data}>
+      <DataTable columns={cols} data={macros.data} fullWidth>
         <DataTable.ExpandableRow>
           {({ row }: { row: Macro }) => <HostGroupFromMacroDetailTable macro={row} />}
         </DataTable.ExpandableRow>
