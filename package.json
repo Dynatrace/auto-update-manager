@@ -22,7 +22,7 @@
     "eslint-plugin-react-hooks": "^4.5.0"
   },
   "name": "auto-update-manager",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "A Sample App which enables controlling AutoUpdate at large scale",
   "engines": {
     "node": ">=16.13.0"

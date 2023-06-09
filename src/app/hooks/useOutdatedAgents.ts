@@ -16,7 +16,7 @@ export const useOutdatedAgents = () => {
     || [];
   const older = agents.data
     ?.filter((a) => typeof a.hostInfo?.agentVersion != "undefined")
-    .filter((a) => (a.hostInfo?.agentVersion?.minor || 0) < currentVersion - 6)
+    .filter((a) => (a.hostInfo?.agentVersion?.minor || 0) < currentVersion - 12)
     || [];
 
   return {
