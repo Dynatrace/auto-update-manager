@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useDQLAllHostGroups } from "../hooks/useDQLAllHostGroups";
 import { useSettingsReader } from "../hooks/useSettingsReader";
 import { Text, ExpandableText, LoadingIndicator, List } from "@dynatrace/strato-components-preview";

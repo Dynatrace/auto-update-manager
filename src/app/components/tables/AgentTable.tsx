@@ -108,7 +108,7 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
   if (agents.isLoading) return <LoadingIndicator />;
 
   const cols: TableColumn[] = [
-    { header: "Status", accessor: "updateStatus", cell: safetyCell, autoWidth: true },
+    { header: "Status", accessor: "updateStatus", cell: safetyCell, autoWidth: true, minWidth: 160 },
     {
       header: "Version",
       accessor: "hostInfo.agentVersion",
