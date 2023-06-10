@@ -11,10 +11,13 @@ import {
 } from "@dynatrace/strato-components-preview/";
 import { DetailViewCard } from "./components/DetailViewCard";
 import { MainViewCard } from "./components/MainViewCard";
-import { AutoUpdateManager } from "./components/AutoUpdateManager";
 import { AutoUpdateTerminology } from "./components/terminologyOverlays/AutoUpdateTerminology";
 import { HostgroupTerminology } from "./components/terminologyOverlays/HostgroupTerminology";
 import { MaximizeIcon, MinimizeIcon } from "@dynatrace/strato-icons";
+import { Route, NavLink as RouterLink, Routes, Navigate } from "react-router-dom";
+import { CurrentSettings } from "./pages/CurrentSettings";
+import { HostgroupMacros } from "./pages/Macros";
+import { OneAgentStatus } from "./pages/OneAgentStatus";
 
 export const App = () => {
   const theme = useCurrentTheme();
@@ -26,7 +29,20 @@ export const App = () => {
   return (
     <Page>
       <Page.Header>
-        <AppHeader></AppHeader>
+        <AppHeader>
+          <AppHeader.NavItems>
+            <AppHeader.AppNavLink as={RouterLink} to="/" />
+            <AppHeader.NavItem as={RouterLink} to="/current_settings">
+              Current settings
+            </AppHeader.NavItem>
+            <AppHeader.NavItem as={RouterLink} to="/hostgroup_macros">
+              Hostgroup macros
+            </AppHeader.NavItem>
+            <AppHeader.NavItem as={RouterLink} to="/oneagent_status">
+              OneAgent status
+            </AppHeader.NavItem>
+          </AppHeader.NavItems>
+        </AppHeader>
       </Page.Header>
       <Page.Main>
         <Flex flexDirection="row" justifyContent="flex-end">
@@ -45,8 +61,9 @@ export const App = () => {
                 <Heading>AutoUpdate Manager</Heading>
                 {!hideAds && (
                   <Text>
-                    This Sample App enables you to control your OneAgent <AutoUpdateTerminology /> settings per host group at
-                    large scale. It introduces the concept of "macros" as meta-configuration to enable automation-assisted tasks.
+                    This Sample App enables you to control your OneAgent <AutoUpdateTerminology /> settings per host
+                    group at large scale. It introduces the concept of "macros" as meta-configuration to enable
+                    automation-assisted tasks.
                   </Text>
                 )}
               </Flex>
@@ -74,7 +91,12 @@ export const App = () => {
             </Flex>
           </Flex>
           <Flex flexDirection="column" width={max_width}>
-            <AutoUpdateManager />
+            <Routes>
+              <Route path="/current_settings" element={<CurrentSettings />} />
+              <Route path="/hostgroup_macros" element={<HostgroupMacros />} />
+              <Route path="/oneagent_status" element={<OneAgentStatus />} />
+              <Route index element={<Navigate to="/hostgroup_macros" />} />
+            </Routes>
           </Flex>
           {!hideAds && <MainViewCard />}
         </Flex>

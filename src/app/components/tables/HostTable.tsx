@@ -4,7 +4,6 @@ import { useSettingsReader } from "src/app/hooks/useSettingsReader";
 import { Indicator } from "../Indicator";
 import { MaintenanceWindowCell } from "./cells/MaintenanceWindowCell";
 import { HostLink } from "../links/HostLink";
-import { COL_WIDTH } from "src/app/constants";
 
 export const HostTable = () => {
   const { data, isError, isLoading } = useSettingsReader("builtin:deployment.oneagent.updates", "host");
@@ -18,7 +17,7 @@ export const HostTable = () => {
   }
 
   const cols: TableColumn[] = [
-    { accessor: "scope", header: "Scope", cell: ({ value }) => <HostLink hostid={value} />, autoWidth: true },
+    { accessor: "scope", header: "Scope", cell: ({ value }) => <HostLink hostid={value} />, autoWidth: true, minWidth: 250 },
     { accessor: "value.updateMode", header: "Update Mode" },
     { accessor: "value.targetVersion", header: "Target Version" },
     {
