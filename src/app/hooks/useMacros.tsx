@@ -3,10 +3,15 @@ import { Meta } from "../types/Meta";
 import { stateClient } from "@dynatrace-sdk/client-state";
 
 const loadMacrosFromServer = async () => {
-  const appState = await stateClient.getAppState({ key: "macros" });
-  if (typeof appState?.value == "string") {
-    const serverMacros = JSON.parse(appState.value);
-    return serverMacros;
+  try {
+    const appState = await stateClient.getAppState({ key: "macros" });
+    if (typeof appState?.value == "string") {
+      const serverMacros = JSON.parse(appState.value);
+      return serverMacros;
+    }
+  } catch (e) {
+    if (e?.body?.error?.code == 404) return [];
+    else throw e;
   }
 };
 
