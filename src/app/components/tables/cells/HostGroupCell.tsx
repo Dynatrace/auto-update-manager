@@ -1,5 +1,5 @@
 import React from "react";
-import { LoadingIndicator } from "@dynatrace/strato-components-preview";
+import { LoadingIndicator, InformationOverlay } from "@dynatrace/strato-components-preview";
 import { useHostGroupFromMacro } from "src/app/hooks/useHostGroupFromMacro";
 import { Macro, HostGroup } from "src/app/types/Types";
 import { Indicator } from "../../Indicator";
@@ -43,23 +43,32 @@ export const HostGroupCell = ({ macro }: { macro: Macro }) => {
   )
     compliantHostgroups.push(...hgWithoutSettings);
 
+    const hostgroupLimited =
+    hostgroupsFromMacroResult.data.length == 1000 ? (
+      <InformationOverlay variant="warning">
+        <InformationOverlay.Content>Results possibly limited to 1000</InformationOverlay.Content>
+      </InformationOverlay>
+    ) : (
+      <></>
+    );
+
   if (compliantHostgroups.length < 1){
     // debugger;
     return (
       <Indicator state="critical">
-        {compliantHostgroups.length} / {hostgroupsFromMacroResult.data.length}
+        {compliantHostgroups.length} / {hostgroupsFromMacroResult.data.length} {hostgroupLimited}
       </Indicator>
     );}
   else if (compliantHostgroups.length === hostgroupsFromMacroResult.data.length)
     return (
       <Indicator state="success">
-        {compliantHostgroups.length} / {hostgroupsFromMacroResult.data.length}
+        {compliantHostgroups.length} / {hostgroupsFromMacroResult.data.length} {hostgroupLimited}
       </Indicator>
     );
   else
     return (
       <Indicator state="warning">
-        {compliantHostgroups.length} / {hostgroupsFromMacroResult.data.length}
+        {compliantHostgroups.length} / {hostgroupsFromMacroResult.data.length} {hostgroupLimited}
       </Indicator>
     );
 };

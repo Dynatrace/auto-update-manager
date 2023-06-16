@@ -16,7 +16,7 @@ import { HostgroupTerminology } from "./components/terminologyOverlays/Hostgroup
 import { MaximizeIcon, MinimizeIcon } from "@dynatrace/strato-icons";
 import { Route, NavLink as RouterLink, Routes, Navigate } from "react-router-dom";
 import { CurrentSettings } from "./pages/CurrentSettings";
-import { HostgroupMacros } from "./pages/Macros";
+import { Macros } from "./pages/Macros";
 import { OneAgentStatus } from "./pages/OneAgentStatus";
 
 export const App = () => {
@@ -35,8 +35,8 @@ export const App = () => {
             <AppHeader.NavItem as={RouterLink} to="/current_settings">
               Current settings
             </AppHeader.NavItem>
-            <AppHeader.NavItem as={RouterLink} to="/hostgroup_macros">
-              Hostgroup macros
+            <AppHeader.NavItem as={RouterLink} to="/macros">
+              Macros
             </AppHeader.NavItem>
             <AppHeader.NavItem as={RouterLink} to="/oneagent_status">
               OneAgent status
@@ -93,7 +93,7 @@ export const App = () => {
           <Flex flexDirection="column" width={max_width}>
             <Routes>
               <Route path="/current_settings" element={<CurrentSettings />} />
-              <Route path="/hostgroup_macros" element={<HostgroupMacros />} />
+              <Route path="/macros" element={<Macros />} />
               <Route path="/oneagent_status" element={<OneAgentStatus />} />
               <Route index element={<Navigate to="/hostgroup_macros" />} />
             </Routes>

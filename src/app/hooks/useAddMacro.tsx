@@ -12,12 +12,15 @@ export const useAddMacro = () => {
     updateMode = !["AUTOMATIC", "AUTOMATIC_DURING_MW", "MANUAL"].includes(updateMode) ? "AUTOMATIC" : updateMode;
     const desiredVersion = formData.get("desiredVersion")?.toString() || "";
     const desiredWindow = formData.get("desiredWindow")?.toString() || "";
+    const scope = formData.get("scope") == "host" ? "host" : "hostgroup";
+
     const macro: Macro = {
       name: name,
       filter: filter,
       updateMode: updateMode as UpdateMode,
       desiredVersion: desiredVersion,
       desiredWindow: desiredWindow,
+      scope: scope,
     };
     const macros: Macro[] = await queryClient.ensureQueryData(["macros"]);
     const newMacros: Macro[] = [...macros];
