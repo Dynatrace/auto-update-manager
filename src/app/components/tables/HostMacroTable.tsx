@@ -6,16 +6,16 @@ import {
   TABLE_EXPANDABLE_DEFAULT_COLUMN,
 } from "@dynatrace/strato-components-preview";
 import { useMacros } from "../../hooks/useMacros";
-import { HostGroupCell } from "./cells/HostGroupCell";
+import { HostCell } from "./cells/HostCell";
 import { Macro } from "src/app/types/Types";
 import { MaintenanceWindowCell } from "./cells/MaintenanceWindowCell";
-import { HostGroupFromMacroDetailTable } from "./HostGroupFromMacroDetailTable";
+import { HostFromMacroDetailTable } from "./HostFromMacroDetailTable";
 import { ActionsCell } from "./cells/ActionsCell";
 import { Indicator } from "../Indicator";
 import { VersionCell } from "./cells/VersionCell";
 
-export const HostGroupMacroTable = () => {
-  const macros = useMacros("hostgroup");
+export const HostMacroTable = () => {
+  const macros = useMacros("host");
 
   const cols: TableColumn[] = [
     {
@@ -31,7 +31,7 @@ export const HostGroupMacroTable = () => {
       autoWidth: true,
     },
     { accessor: "desiredWindow", header: "Window", cell: ({ value }) => <MaintenanceWindowCell window={value} /> },
-    { id: "hostgroups", header: "Host Groups", cell: ({ row }) => <HostGroupCell macro={row.original as Macro} /> },
+    { id: "hosts", header: "Hosts", cell: ({ row }) => <HostCell macro={row.original as Macro} /> },
     {
       id: "actions",
       header: "",
@@ -41,13 +41,14 @@ export const HostGroupMacroTable = () => {
       autoWidth: true,
     },
   ];
+
   if (macros.isError) return <Indicator state="critical">{(macros.error || "").toString()}</Indicator>;
   else if (macros.isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
   if (Array.isArray(macros.data))
     return (
       <DataTable columns={cols} data={macros.data} fullWidth>
         <DataTable.ExpandableRow>
-          {({ row }: { row: Macro }) => <HostGroupFromMacroDetailTable macro={row} />}
+          {({ row }: { row: Macro }) => <HostFromMacroDetailTable macro={row} />}
         </DataTable.ExpandableRow>
       </DataTable>
     );

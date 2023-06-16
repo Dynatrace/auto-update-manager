@@ -1,5 +1,5 @@
 import React from "react";
-import { LoadingIndicator } from "@dynatrace/strato-components-preview";
+import { ProgressCircle } from "@dynatrace/strato-components-preview";
 import { ErrorIcon } from "@dynatrace/strato-icons";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
 import { MaintenanceWindow } from "src/app/types/Types";
@@ -12,7 +12,7 @@ type MaintenanceWindowCellProps = {
 export const MaintenanceWindowCell = ({ windows, window }: MaintenanceWindowCellProps) => {
   const { data, isLoading, isError } = useSettingsReader("builtin:deployment.management.update-windows");
 
-  if (isLoading) return <LoadingIndicator />;
+  if (isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
 
   if (isError) return <ErrorIcon />;
 

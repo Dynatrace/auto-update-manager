@@ -11,44 +11,44 @@ import {
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
 import { Indicator } from "../Indicator";
 import { MaintenanceWindowCell } from "./cells/MaintenanceWindowCell";
-import { HostGroupLink } from "../links/HostGroupLink";
-import { HostGroup, Macro } from "src/app/types/Types";
-import { useHostGroupFromMacro } from "src/app/hooks/useHostGroupFromMacro";
+import { HostLink } from "../links/HostLink";
+import { Host, Macro } from "src/app/types/Types";
+import { useHostFromMacro } from "src/app/hooks/useHostFromMacro";
 import { testMaintenanceWindows } from "src/app/utils/helperFunctions";
 import { displayVersionFromSettings } from "src/app/utils/helperFunctions";
 
-interface HostGroupFromMacroDetailTableProps {
+interface HostFromMacroDetailTableProps {
   /** display these hosts groups with matching to settings, else just from settings */
   macro: Macro;
 }
 
-export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetailTableProps) => {
-  const hostGroupsFromSettingsResult = useSettingsReader("builtin:deployment.oneagent.updates", "hostgroup");
-  const hostgroupsFromMacroResult = useHostGroupFromMacro(macro);
+export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProps) => {
+  const hostsFromSettingsResult = useSettingsReader("builtin:deployment.oneagent.updates", "host");
+  const hostsFromMacroResult = useHostFromMacro(macro);
 
   function lookupSettings(row, value?: string) {
-    const hg: HostGroup = row.original;
-    const match = hostGroupsFromSettingsResult?.data?.find((so) => so.scope == hg.id);
+    const host: Host = row.original;
+    const match = hostsFromSettingsResult?.data?.find((so) => so.scope == host.id);
     if (value) return match?.value[value];
     else return match;
   }
 
-  if (hostgroupsFromMacroResult.isError)
-    return <Indicator state="critical">{(hostgroupsFromMacroResult.error || "").toString()}</Indicator>;
+  if (hostsFromMacroResult.isError)
+    return <Indicator state="critical">{(hostsFromMacroResult.error || "").toString()}</Indicator>;
 
-  if (hostGroupsFromSettingsResult.isError) {
+  if (hostsFromSettingsResult.isError) {
     return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
   }
 
-  if (hostGroupsFromSettingsResult.isLoading || hostgroupsFromMacroResult.isLoading) {
+  if (hostsFromSettingsResult.isLoading || hostsFromMacroResult.isLoading) {
     return <ProgressCircle size="small" aria-label="Loading..." />;
   }
 
   const cols: TableColumn[] = [
     {
-      header: "Hostgroup",
-      id: "hostgroup",
-      cell: ({ row }) => <HostGroupLink hostgroup={row.original} />,
+      header: "Host",
+      id: "host",
+      cell: ({ row }) => <HostLink hostid={row.original.id} />,
       autoWidth: true,
       minWidth: 150,
     },
@@ -91,25 +91,25 @@ export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetai
       },
     },
   ];
-  const hgWithSettings = hostgroupsFromMacroResult.data.filter(
-    (hg) => hostGroupsFromSettingsResult?.data?.find((so) => so.scope == hg.id) != undefined
+  const hostWithSettings = hostsFromMacroResult.data.filter(
+    (host) => hostsFromSettingsResult?.data?.find((so) => so.scope == host.id) != undefined
   );
-  const hgWithoutSettings = hostgroupsFromMacroResult.data.filter(
-    (hg) => hostGroupsFromSettingsResult?.data?.find((so) => so.scope == hg.id) == undefined
+  const hostWithoutSettings = hostsFromMacroResult.data.filter(
+    (host) => hostsFromSettingsResult?.data?.find((so) => so.scope == host.id) == undefined
   );
-  // debugger;
+
   return (
     <Flex flexDirection="column">
-      <DataTable columns={cols} data={hgWithSettings} fullWidth>
+      <DataTable columns={cols} data={hostWithSettings} fullWidth>
         <DataTable.Pagination defaultPageSize={10} />
       </DataTable>
-      {hgWithoutSettings?.length > 0 && (
+      {hostWithoutSettings?.length > 0 && (
         <div>
-          <Text>{hgWithoutSettings?.length || "?"} Host Groups using environment defaults:</Text>
+          <Text>{hostWithoutSettings?.length || "?"} Hosts using environment defaults:</Text>
           <ExpandableText>
             <List>
-              {hgWithoutSettings?.map((hg) => (
-                <HostGroupLink hostgroup={hg} key={hg.id} />
+              {hostWithoutSettings?.map((host) => (
+                <HostLink hostid={host.id} key={host.id} />
               ))}
             </List>
           </ExpandableText>

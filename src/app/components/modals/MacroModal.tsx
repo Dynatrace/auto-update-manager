@@ -9,12 +9,14 @@ import {
   SelectOption,
   SelectedKeys,
   Code,
-  LoadingIndicator,
+  ProgressCircle,
   InformationOverlay,
   Text,
   List,
   SelectSection,
   Strong,
+  RadioGroup,
+  Radio,
 } from "@dynatrace/strato-components-preview";
 import { PlusIcon, EditIcon, ErrorIcon } from "@dynatrace/strato-icons";
 import { useVersions } from "src/app/hooks/useVersions";
@@ -38,19 +40,21 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
     macro ? [macro.desiredVersion] : null
   );
   const [desiredWindowKeys, setDesiredWindowKeys] = useState<SelectedKeys | null>(macro ? [macro.desiredWindow] : null);
-  const [updateModeKeys, setUpdateModeKeys] = useState<SelectedKeys | null>(macro? [macro.updateMode] :["AUTOMATIC_DURING_MW"]);
+  const [updateModeKeys, setUpdateModeKeys] = useState<SelectedKeys | null>(
+    macro ? [macro.updateMode] : ["AUTOMATIC_DURING_MW"]
+  );
   const versions = useVersions();
   const windows = useSettingsReader("builtin:deployment.management.update-windows");
   const formRef = useRef<HTMLFormElement>(null);
   const macros = useMacros();
-  const {mutate:addMacro} = useAddMacro();
+  const { mutate: addMacro } = useAddMacro();
 
   async function submit(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault();
     if (formRef.current) {
       const formData = new FormData(formRef.current);
-      if(modalMode=="Update" && macro) await addMacro({formData,macro});
-      else await addMacro({formData});
+      if (modalMode == "Update" && macro) await addMacro({ formData, macro });
+      else await addMacro({ formData });
     }
     onDismiss();
   }
@@ -58,6 +62,18 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
     <Modal title={modalMode + " Group"} show={modalMode != null} onDismiss={onDismiss}>
       <form ref={formRef} onSubmit={submit}>
         <Flex flexDirection="column">
+          <FormField label="Scope" required>
+            <RadioGroup defaultValue={macro?.scope ? macro.scope : "hostgroup"} name="scope">
+              <Flex flexDirection="row">
+                <Radio aria-label="Hostgroup" value="hostgroup">
+                  Host group
+                </Radio>
+                <Radio aria-label="Host" value="host">
+                  Host
+                </Radio>
+              </Flex>
+            </RadioGroup>
+          </FormField>
           <FormField label="Name" required>
             <TextInput
               placeholder="Group Name"
@@ -65,7 +81,7 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
               value={name}
               onChange={(val) => {
                 setName(val);
-                setDupName(macros.data.filter((m) => m.name == val).length > 0);
+                setDupName(macros.data ? macros.data.filter((m) => m.name == val)?.length > 0 : false);
               }}
             />
             {dupName && <Indicator state="critical">Macro name must be unique</Indicator>}
@@ -90,9 +106,13 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
                 <InformationOverlay>
                   <InformationOverlay.Trigger />
                   <InformationOverlay.Content>
-                    <Text>Create a filter to pick hostgroups. Use a DQL filter for <Strong>host</Strong> entities. 
-                    The constructed query will find all matching hosts, then return their hostgroups.</Text>
-                    <Text><Strong>Examples:</Strong></Text>
+                    <Text>
+                      Create a filter to pick hostgroups. Use a DQL filter for <Strong>host</Strong> entities. The
+                      constructed query will find all matching hosts, then return their hostgroups.
+                    </Text>
+                    <Text>
+                      <Strong>Examples:</Strong>
+                    </Text>
                     <List>
                       <Code>{`osType=="LINUX"`}</Code>
                       <Code>{`in(tags,"poland-windows-host")`}</Code>
@@ -119,7 +139,7 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
           </FormField>
 
           <FormField label="Version" required>
-            {versions.isLoading && <LoadingIndicator />}
+            {versions.isLoading && <ProgressCircle size="small" aria-label="Loading..." />}
             {versions.isError && <ErrorIcon />}
             {!versions.isLoading && !versions.isError && (
               <Select
@@ -153,13 +173,17 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
             )}
           </FormField>
           <FormField label="Window">
-            {windows.isLoading && <LoadingIndicator />}
+            {windows.isLoading && <ProgressCircle size="small" aria-label="Loading..." />}
             {windows.isError && <ErrorIcon />}
             {!windows.isLoading && !windows.isError && (
               <Select
                 name="desiredWindow"
                 selectedId={desiredWindowKeys}
-                disabled={!Array.isArray(updateModeKeys) || updateModeKeys.length<1 || !updateModeKeys.includes("AUTOMATIC_DURING_MW")}
+                disabled={
+                  !Array.isArray(updateModeKeys) ||
+                  updateModeKeys.length < 1 ||
+                  !updateModeKeys.includes("AUTOMATIC_DURING_MW")
+                }
                 onChange={(keys) => {
                   setDesiredWindowKeys(keys);
                 }}

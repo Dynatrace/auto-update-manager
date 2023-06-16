@@ -5,6 +5,7 @@ export type Macro = {
   updateMode: UpdateMode;
   desiredVersion: string;
   desiredWindow: string;
+  scope: "hostgroup"|"host";
 };
 
 export type SchemaType = "builtin:deployment.oneagent.updates" | "builtin:deployment.management.update-windows";

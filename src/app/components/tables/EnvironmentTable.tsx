@@ -1,5 +1,5 @@
 import React from "react";
-import { DataTable, LoadingIndicator, TableColumn } from "@dynatrace/strato-components-preview";
+import { DataTable, ProgressCircle, TableColumn } from "@dynatrace/strato-components-preview";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
 import { Indicator } from "../Indicator";
 import { MaintenanceWindowCell } from "./cells/MaintenanceWindowCell";
@@ -8,7 +8,7 @@ export const EnvironmentTable = () => {
   const { data, isError, isLoading } = useSettingsReader("builtin:deployment.oneagent.updates", "environment");
 
   if (isLoading) {
-    return <LoadingIndicator />;
+    return <ProgressCircle size="small" aria-label="Loading..." />;
   }
 
   if (isError) {

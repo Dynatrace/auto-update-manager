@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Flex, LoadingIndicator, Menu, Modal, Text } from "@dynatrace/strato-components-preview";
+import { Button, Flex, ProgressCircle, Menu, Modal, Text } from "@dynatrace/strato-components-preview";
 import { CycleIcon, DotMenuIcon, DeleteIcon, EditIcon, GhostIcon } from "@dynatrace/strato-icons";
 // import { useMacros } from "src/app/hooks/useMacros";
 import { useRemoveMacro } from "src/app/hooks/useRemoveMacro";
@@ -14,18 +14,17 @@ export const ActionsCell = ({ macro }: { macro: Macro }) => {
   const [showClearModal, setShowClearModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [firedRealSync, setFiredRealSync] = useState(false);
-  const {mutate:removeMacro} = useRemoveMacro();
+  const { mutate: removeMacro } = useRemoveMacro();
   const sync = useSyncSettingsFromMacro();
   const clear = useClearHostgroupsFromMacro();
-  function syncTitle(){
-    if(sync.isLoading){
-      if(firedRealSync) return "Syncing...";
+  function syncTitle() {
+    if (sync.isLoading) {
+      if (firedRealSync) return "Syncing...";
       else return "Running pre-validation...";
-    }
-    else return "Sync to Settings?"
+    } else return "Sync to Settings?";
   }
   return (
-    <Flex flexDirection="row">
+    <Flex flexDirection="row" gap={2}>
       <Button
         onClick={() => {
           console.log("sync (validate)");
@@ -44,7 +43,7 @@ export const ActionsCell = ({ macro }: { macro: Macro }) => {
         onDismiss={() => setShowSyncModal(false)}
       >
         {sync.isError && <Indicator state="critical">{(sync.error || "").toString()}</Indicator>}
-        {sync.isLoading && <LoadingIndicator />}
+        {sync.isLoading && <ProgressCircle size="small" aria-label="Loading..." />}
         {!sync.isError && !sync.isLoading && (
           <Button
             variant="emphasized"
@@ -105,7 +104,7 @@ export const ActionsCell = ({ macro }: { macro: Macro }) => {
       <Modal title="Are you sure?" show={showClearModal || clear.isLoading} onDismiss={() => setShowClearModal(false)}>
         <Text>Are you sure you want to clear autoupdate settings from these hostgroups?</Text>
         {clear.isError && <Indicator state="critical">{(clear.error || "").toString()}</Indicator>}
-        {clear.isLoading && <LoadingIndicator />}
+        {clear.isLoading && <ProgressCircle size="small" aria-label="Loading..." />}
         {!clear.isError && !clear.isLoading && (
           <Button
             variant="emphasized"
