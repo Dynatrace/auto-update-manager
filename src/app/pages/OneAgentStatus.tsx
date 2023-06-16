@@ -3,6 +3,8 @@ import { Flex, Surface, Text, TitleBar } from "@dynatrace/strato-components-prev
 import { UpdateStatusChart } from "../components/charts/UpdateStatusChart";
 import { AgentTable } from "../components/tables/AgentTable";
 import { OutdatedAgents } from "../components/OutdatedAgents";
+import { OneAgentIcon } from "../components/customIcons/OneAgentIcon";
+import { TitleBarIconWrapper } from "../components/customIcons/TitleBarIconWrapper";
 
 export const OneAgentStatus = () => {
   const [agentSpecialFilter, setAgentSpecialFilter] = useState<"faulty" | "unsupported" | "older" | null>(null);
@@ -11,6 +13,11 @@ export const OneAgentStatus = () => {
     <Flex flexDirection="column">
       <Surface>
         <TitleBar>
+          <TitleBar.Prefix>
+            <TitleBarIconWrapper>
+              <OneAgentIcon />
+            </TitleBarIconWrapper>
+          </TitleBar.Prefix>
           <TitleBar.Title>OneAgent status</TitleBar.Title>
         </TitleBar>
         <Flex flexDirection="column">

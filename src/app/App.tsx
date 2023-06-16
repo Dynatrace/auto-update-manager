@@ -13,11 +13,12 @@ import { DetailViewCard } from "./components/DetailViewCard";
 import { MainViewCard } from "./components/MainViewCard";
 import { AutoUpdateTerminology } from "./components/terminologyOverlays/AutoUpdateTerminology";
 import { HostgroupTerminology } from "./components/terminologyOverlays/HostgroupTerminology";
-import { MaximizeIcon, MinimizeIcon } from "@dynatrace/strato-icons";
+import { MaximizeIcon, MinimizeIcon, SettingIcon, TriggerIcon } from "@dynatrace/strato-icons";
 import { Route, NavLink as RouterLink, Routes, Navigate } from "react-router-dom";
 import { CurrentSettings } from "./pages/CurrentSettings";
 import { Macros } from "./pages/Macros";
 import { OneAgentStatus } from "./pages/OneAgentStatus";
+import { OneAgentIcon } from "./components/customIcons/OneAgentIcon";
 
 export const App = () => {
   const theme = useCurrentTheme();
@@ -32,13 +33,16 @@ export const App = () => {
         <AppHeader>
           <AppHeader.NavItems>
             <AppHeader.AppNavLink as={RouterLink} to="/" />
-            <AppHeader.NavItem as={RouterLink} to="/current_settings">
+            <AppHeader.NavItem as={RouterLink} to="/current_settings" >
+              <SettingIcon />
               Current settings
             </AppHeader.NavItem>
             <AppHeader.NavItem as={RouterLink} to="/macros">
+              <TriggerIcon/>
               Macros
             </AppHeader.NavItem>
             <AppHeader.NavItem as={RouterLink} to="/oneagent_status">
+              <OneAgentIcon/>
               OneAgent status
             </AppHeader.NavItem>
           </AppHeader.NavItems>
@@ -95,7 +99,7 @@ export const App = () => {
               <Route path="/current_settings" element={<CurrentSettings />} />
               <Route path="/macros" element={<Macros />} />
               <Route path="/oneagent_status" element={<OneAgentStatus />} />
-              <Route index element={<Navigate to="/hostgroup_macros" />} />
+              <Route index element={<Navigate to="/macros" />} />
             </Routes>
           </Flex>
           {!hideAds && <MainViewCard />}

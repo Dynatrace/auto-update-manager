@@ -4,12 +4,19 @@ import { EnvironmentTable } from "../components/tables/EnvironmentTable";
 import { HostGroupTable } from "../components/tables/HostGroupTable";
 import { HostTable } from "../components/tables/HostTable";
 import { HostGroupText } from "../components/HostGroupText";
+import { SettingIcon } from "@dynatrace/strato-icons";
+import { TitleBarIconWrapper } from "../components/customIcons/TitleBarIconWrapper";
 
 export const CurrentSettings = () => {
   return (
     <Flex flexDirection="column">
       <Surface>
         <TitleBar>
+          <TitleBar.Prefix>
+            <TitleBarIconWrapper>
+              <SettingIcon />
+            </TitleBarIconWrapper>
+          </TitleBar.Prefix>
           <TitleBar.Title>Current settings</TitleBar.Title>
         </TitleBar>
         <Text>
