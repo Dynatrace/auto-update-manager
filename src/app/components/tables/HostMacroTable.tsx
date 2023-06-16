@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  LoadingIndicator,
+  ProgressCircle,
   DataTable,
   TableColumn,
   TABLE_EXPANDABLE_DEFAULT_COLUMN,
@@ -32,11 +32,18 @@ export const HostMacroTable = () => {
     },
     { accessor: "desiredWindow", header: "Window", cell: ({ value }) => <MaintenanceWindowCell window={value} /> },
     { id: "hosts", header: "Hosts", cell: ({ row }) => <HostCell macro={row.original as Macro} /> },
-    { id: "actions", header: "", alignment: "right", cell: ({ row }) => <ActionsCell macro={row.original as Macro} /> },
+    {
+      id: "actions",
+      header: "",
+      alignment: "right",
+      cell: ({ row }) => <ActionsCell macro={row.original as Macro} />,
+      maxWidth: 100,
+      autoWidth: true,
+    },
   ];
-  
+
   if (macros.isError) return <Indicator state="critical">{(macros.error || "").toString()}</Indicator>;
-  else if (macros.isLoading) return <LoadingIndicator />;
+  else if (macros.isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
   if (Array.isArray(macros.data))
     return (
       <DataTable columns={cols} data={macros.data} fullWidth>

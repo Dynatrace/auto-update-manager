@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  LoadingIndicator,
+  ProgressCircle,
   InformationOverlay,
   SimpleTable,
   Button,
@@ -19,7 +19,7 @@ export const OutdatedAgents = ({ setAgentSpecialFilter }: OutdatedAgentsProps) =
   const { isError, isLoading, error, faultyAgents, unsupported, older } = useOutdatedAgents();
 
   if (isError) return <Indicator state="critical">{(error as object).toString()}</Indicator>;
-  if (isLoading) return <LoadingIndicator />;
+  if (isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
 
   const tableData = [
     {
@@ -66,10 +66,10 @@ export const OutdatedAgents = ({ setAgentSpecialFilter }: OutdatedAgentsProps) =
       ),
     },
   ];
-  const cols:SimpleTableColumn[]  = [
+  const cols: SimpleTableColumn[] = [
     { accessor: "info", header: " ", alignment: "right" },
     { accessor: "name", header: " " },
-    { accessor: "detail", header: " ", alignment:"center" },
+    { accessor: "detail", header: " ", alignment: "center" },
   ];
 
   return (

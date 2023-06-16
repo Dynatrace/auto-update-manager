@@ -1,7 +1,7 @@
 import React from "react";
 import {
   DataTable,
-  LoadingIndicator,
+  ProgressCircle,
   TableColumn,
   Flex,
   Text,
@@ -41,18 +41,20 @@ export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetai
   }
 
   if (hostGroupsFromSettingsResult.isLoading || hostgroupsFromMacroResult.isLoading) {
-    return <LoadingIndicator />;
+    return <ProgressCircle size="small" aria-label="Loading..." />;
   }
 
   const cols: TableColumn[] = [
     {
       header: "Hostgroup",
+      id: "hostgroup",
       cell: ({ row }) => <HostGroupLink hostgroup={row.original} />,
       autoWidth: true,
-      minWidth: 150
+      minWidth: 150,
     },
     {
       header: "Update Mode",
+      id: "updateMode",
       cell: ({ row }) => {
         const updateMode = lookupSettings(row, "updateMode");
         if (updateMode == "MANUAL") return <Indicator state="critical">{updateMode}</Indicator>;
@@ -62,6 +64,7 @@ export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetai
     },
     {
       header: "Target Version",
+      id: "displayVersion",
       cell: ({ row }) => {
         const settings = lookupSettings(row);
         const displayVersion = displayVersionFromSettings(settings);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-  LoadingIndicator,
+  ProgressCircle,
   DataTable,
   Flex,
   FilterBar,
@@ -105,7 +105,7 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
   }, [agents.data, agentSpecialFilter]);
 
   if (agents.isError) return <Indicator state="critical">{(agents.error as object).toString()}</Indicator>;
-  if (agents.isLoading) return <LoadingIndicator />;
+  if (agents.isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
 
   const cols: TableColumn[] = [
     { header: "Status", accessor: "updateStatus", cell: safetyCell, autoWidth: true, minWidth: 160 },

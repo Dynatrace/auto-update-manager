@@ -1,5 +1,5 @@
 import React from "react";
-import { LoadingIndicator, InformationOverlay } from "@dynatrace/strato-components-preview";
+import { ProgressCircle, InformationOverlay } from "@dynatrace/strato-components-preview";
 import { useHostGroupFromMacro } from "src/app/hooks/useHostGroupFromMacro";
 import { Macro, HostGroup } from "src/app/types/Types";
 import { Indicator } from "../../Indicator";
@@ -17,7 +17,7 @@ export const HostGroupCell = ({ macro }: { macro: Macro }) => {
     return <Indicator state="critical">{(hostGroupsFromSettingsResult.error || "").toString()}</Indicator>;
   else if (envSettings.isError) return <Indicator state="critical">{(envSettings.error || "").toString()}</Indicator>;
   else if (hostgroupsFromMacroResult.isLoading || hostGroupsFromSettingsResult.isLoading || envSettings.isLoading)
-    return <LoadingIndicator />;
+    return <ProgressCircle size="small" aria-label="Loading..." />;
 
   const hgWithSettings = hostgroupsFromMacroResult.data.filter(
     (hg) => hostGroupsFromSettingsResult?.data?.find((so) => so.scope == hg.id) != undefined
@@ -30,20 +30,20 @@ export const HostGroupCell = ({ macro }: { macro: Macro }) => {
   for (const hgws of hgWithSettings) {
     const settings = hostGroupsFromSettingsResult?.data?.find((so) => so.scope == hgws.id);
     if (
-      settings?.value.updateMode == macro.updateMode  &&
+      settings?.value.updateMode == macro.updateMode &&
       displayVersionFromSettings(settings) == macro.desiredVersion &&
-      testMaintenanceWindows(settings?.value.maintenanceWindows,macro.desiredWindow)
+      testMaintenanceWindows(settings?.value.maintenanceWindows, macro.desiredWindow)
     )
       compliantHostgroups.push(hgws);
   }
   if (
     envSettings.data[0].value.updateMode == macro.updateMode &&
     envSettings.data[0].value.targetVersion == macro.desiredVersion &&
-    testMaintenanceWindows(envSettings.data[0].value.maintenanceWindows,macro.desiredWindow)
+    testMaintenanceWindows(envSettings.data[0].value.maintenanceWindows, macro.desiredWindow)
   )
     compliantHostgroups.push(...hgWithoutSettings);
 
-    const hostgroupLimited =
+  const hostgroupLimited =
     hostgroupsFromMacroResult.data.length == 1000 ? (
       <InformationOverlay variant="warning">
         <InformationOverlay.Content>Results possibly limited to 1000</InformationOverlay.Content>
@@ -52,14 +52,14 @@ export const HostGroupCell = ({ macro }: { macro: Macro }) => {
       <></>
     );
 
-  if (compliantHostgroups.length < 1){
+  if (compliantHostgroups.length < 1) {
     // debugger;
     return (
       <Indicator state="critical">
         {compliantHostgroups.length} / {hostgroupsFromMacroResult.data.length} {hostgroupLimited}
       </Indicator>
-    );}
-  else if (compliantHostgroups.length === hostgroupsFromMacroResult.data.length)
+    );
+  } else if (compliantHostgroups.length === hostgroupsFromMacroResult.data.length)
     return (
       <Indicator state="success">
         {compliantHostgroups.length} / {hostgroupsFromMacroResult.data.length} {hostgroupLimited}

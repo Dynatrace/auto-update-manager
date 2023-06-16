@@ -1,5 +1,5 @@
 import React from "react";
-import { LoadingIndicator, InformationOverlay } from "@dynatrace/strato-components-preview";
+import { ProgressCircle, InformationOverlay } from "@dynatrace/strato-components-preview";
 import { useHostFromMacro } from "src/app/hooks/useHostFromMacro";
 import { Macro, Host } from "src/app/types/Types";
 import { Indicator } from "../../Indicator";
@@ -17,7 +17,7 @@ export const HostCell = ({ macro }: { macro: Macro }) => {
     return <Indicator state="critical">{(hostsFromSettingsResult.error || "").toString()}</Indicator>;
   else if (envSettings.isError) return <Indicator state="critical">{(envSettings.error || "").toString()}</Indicator>;
   else if (hostsFromMacroResult.isLoading || hostsFromSettingsResult.isLoading || envSettings.isLoading)
-    return <LoadingIndicator />;
+    return <ProgressCircle size="small" aria-label="Loading..." />;
 
   const hostsWithSettings = hostsFromMacroResult.data.filter(
     (host) => hostsFromSettingsResult?.data?.find((so) => so.scope == host.id) != undefined

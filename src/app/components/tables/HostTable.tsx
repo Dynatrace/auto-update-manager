@@ -1,5 +1,5 @@
 import React from "react";
-import { DataTable, LoadingIndicator, TableColumn } from "@dynatrace/strato-components-preview";
+import { DataTable, ProgressCircle, TableColumn } from "@dynatrace/strato-components-preview";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
 import { Indicator } from "../Indicator";
 import { MaintenanceWindowCell } from "./cells/MaintenanceWindowCell";
@@ -9,7 +9,7 @@ export const HostTable = () => {
   const { data, isError, isLoading } = useSettingsReader("builtin:deployment.oneagent.updates", "host");
 
   if (isLoading) {
-    return <LoadingIndicator />;
+    return <ProgressCircle size="small" aria-label="Loading..." />;
   }
 
   if (isError) {
@@ -17,7 +17,13 @@ export const HostTable = () => {
   }
 
   const cols: TableColumn[] = [
-    { accessor: "scope", header: "Scope", cell: ({ value }) => <HostLink hostid={value} />, autoWidth: true, minWidth: 250 },
+    {
+      accessor: "scope",
+      header: "Scope",
+      cell: ({ value }) => <HostLink hostid={value} />,
+      autoWidth: true,
+      minWidth: 250,
+    },
     { accessor: "value.updateMode", header: "Update Mode" },
     { accessor: "value.targetVersion", header: "Target Version" },
     {

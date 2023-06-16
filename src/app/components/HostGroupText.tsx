@@ -1,7 +1,7 @@
 import React from "react";
 import { useDQLAllHostGroups } from "../hooks/useDQLAllHostGroups";
 import { useSettingsReader } from "../hooks/useSettingsReader";
-import { Text, ExpandableText, LoadingIndicator, List } from "@dynatrace/strato-components-preview";
+import { Text, ExpandableText, ProgressCircle, List } from "@dynatrace/strato-components-preview";
 import { Indicator } from "./Indicator";
 import { HostGroupLink } from "./links/HostGroupLink";
 
@@ -10,7 +10,7 @@ export const HostGroupText = () => {
   const hostgroupOverrides = useSettingsReader("builtin:deployment.oneagent.updates", "hostgroup");
 
   if (allHostGroups.isLoading || hostgroupOverrides.isLoading) {
-    return <LoadingIndicator />;
+    return <ProgressCircle size="small" aria-label="Loading..." />;
   }
 
   if (allHostGroups.isError || hostgroupOverrides.isError) {

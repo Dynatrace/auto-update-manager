@@ -1,7 +1,7 @@
 import React from "react";
 import {
   DataTable,
-  LoadingIndicator,
+  ProgressCircle,
   TableColumn,
   Flex,
   Text,
@@ -41,18 +41,20 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
   }
 
   if (hostsFromSettingsResult.isLoading || hostsFromMacroResult.isLoading) {
-    return <LoadingIndicator />;
+    return <ProgressCircle size="small" aria-label="Loading..." />;
   }
 
   const cols: TableColumn[] = [
     {
       header: "Host",
+      id: "host",
       cell: ({ row }) => <HostLink hostid={row.original.id} />,
       autoWidth: true,
-      minWidth: 150
+      minWidth: 150,
     },
     {
       header: "Update Mode",
+      id: "updateMode",
       cell: ({ row }) => {
         const updateMode = lookupSettings(row, "updateMode");
         if (updateMode == "MANUAL") return <Indicator state="critical">{updateMode}</Indicator>;
@@ -62,6 +64,7 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
     },
     {
       header: "Target Version",
+      id: "displayVersion",
       cell: ({ row }) => {
         const settings = lookupSettings(row);
         const displayVersion = displayVersionFromSettings(settings);
@@ -94,7 +97,7 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
   const hostWithoutSettings = hostsFromMacroResult.data.filter(
     (host) => hostsFromSettingsResult?.data?.find((so) => so.scope == host.id) == undefined
   );
-  
+
   return (
     <Flex flexDirection="column">
       <DataTable columns={cols} data={hostWithSettings} fullWidth>

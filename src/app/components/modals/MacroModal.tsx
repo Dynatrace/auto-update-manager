@@ -9,7 +9,7 @@ import {
   SelectOption,
   SelectedKeys,
   Code,
-  LoadingIndicator,
+  ProgressCircle,
   InformationOverlay,
   Text,
   List,
@@ -139,7 +139,7 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
           </FormField>
 
           <FormField label="Version" required>
-            {versions.isLoading && <LoadingIndicator />}
+            {versions.isLoading && <ProgressCircle size="small" aria-label="Loading..." />}
             {versions.isError && <ErrorIcon />}
             {!versions.isLoading && !versions.isError && (
               <Select
@@ -173,7 +173,7 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
             )}
           </FormField>
           <FormField label="Window">
-            {windows.isLoading && <LoadingIndicator />}
+            {windows.isLoading && <ProgressCircle size="small" aria-label="Loading..." />}
             {windows.isError && <ErrorIcon />}
             {!windows.isLoading && !windows.isError && (
               <Select
