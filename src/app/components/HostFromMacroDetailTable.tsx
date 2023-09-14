@@ -76,13 +76,11 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
     {
       accessor: "value.maintenanceWindows",
       header: "Update Windows",
-      // cell: ({ value }) => <MaintenanceWindowCell windows={value} />,
       cell: ({ row }) => {
         const maintenanceWindows = lookupSettings(row, "maintenanceWindows");
         if (testMaintenanceWindows(maintenanceWindows, macro.desiredWindow))
           return <MaintenanceWindowCell windows={maintenanceWindows} />;
         else {
-          // console.log("maintenanceWindows:",JSON.stringify(maintenanceWindows||[]),JSON.stringify([{maintenanceWindow:macro.desiredWindow}]))
           return (
             <Indicator state="warning">
               <MaintenanceWindowCell windows={maintenanceWindows} />

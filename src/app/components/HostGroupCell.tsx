@@ -53,7 +53,6 @@ export const HostGroupCell = ({ macro }: { macro: Macro }) => {
     );
 
   if (compliantHostgroups.length < 1) {
-    // debugger;
     return (
       <Indicator state="critical">
         {compliantHostgroups.length} / {hostgroupsFromMacroResult.data.length} {hostgroupLimited}

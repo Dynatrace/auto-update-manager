@@ -40,7 +40,6 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
           tmpData = tmpData.filter((h) => outdatedAgents.faultyAgents.includes(h));
           break;
         case "unsupported":
-          // debugger;
           tmpData = tmpData.filter((h) => outdatedAgents.unsupported.includes(h));
           break;
         case "older":
@@ -78,7 +77,6 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
                   tmpData = tmpData.filter((h) => outdatedAgents.faultyAgents.includes(h));
                   break;
                 case "unsupported":
-                  // debugger;
                   tmpData = tmpData.filter((h) => outdatedAgents.unsupported.includes(h));
                   break;
                 case "older":
@@ -117,7 +115,6 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
     { header: "Name", accessor: "hostInfo.displayName", cell: safetyCell },
     { header: "Hostgroup", accessor: "hostInfo.hostGroup.name", cell: safetyCell },
     { header: "OS", accessor: "hostInfo.osType", cell: safetyCell, autoWidth: true },
-    // { header: "AutoInjection", accessor: "hostInfo.autoInjection", cell: safetyCell },
     { header: "NetZone", accessor: "currentNetworkZoneId", cell: safetyCell },
   ];
   const statuses: HostAgentInfoUpdateStatus[] = [
@@ -133,7 +130,6 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
   ];
 
   const osTypes = [...new Set(agents.data.map((d) => d.hostInfo?.osType))];
-  // const autoInjection = [...new Set(agents.data.map((d) => d.hostInfo?.autoInjection))];
   const netZones = [
     ...new Set(agents.data.map((d) => d.currentNetworkZoneId).filter((nz) => typeof nz != "undefined")),
   ];
