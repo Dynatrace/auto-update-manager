@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useMemo} from "react";
 import { DataTable, ProgressCircle, TableColumn } from "@dynatrace/strato-components-preview";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
 import { Indicator } from "./Indicator";
@@ -15,7 +15,7 @@ export const EnvironmentTable = () => {
     return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
   }
 
-  const cols: TableColumn[] = [
+  const cols: TableColumn[] = useMemo(()=>[
     { accessor: "scope", header: "Scope", autoWidth: true },
     { accessor: "value.updateMode", header: "Update Mode" },
     { accessor: "value.targetVersion", header: "Target Version" },
@@ -24,7 +24,7 @@ export const EnvironmentTable = () => {
       header: "Update Windows",
       cell: ({ value }) => <MaintenanceWindowCell windows={value} />,
     },
-  ];
+  ],[]);
 
   return (
     <div>

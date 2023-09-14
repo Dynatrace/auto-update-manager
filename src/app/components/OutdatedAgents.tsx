@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   ProgressCircle,
   InformationOverlay,
@@ -66,11 +66,14 @@ export const OutdatedAgents = ({ setAgentSpecialFilter }: OutdatedAgentsProps) =
       ),
     },
   ];
-  const cols: SimpleTableColumn[] = [
-    { accessor: "info", header: " ", alignment: "right" },
-    { accessor: "name", header: " " },
-    { accessor: "detail", header: " ", alignment: "center" },
-  ];
+  const cols: SimpleTableColumn[] = useMemo(
+    () => [
+      { accessor: "info", header: " ", alignment: "right" },
+      { accessor: "name", header: " " },
+      { accessor: "detail", header: " ", alignment: "center" },
+    ],
+    []
+  );
 
   return (
     <Flex flexDirection="column" className="outdated-agents">

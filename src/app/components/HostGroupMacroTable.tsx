@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   ProgressCircle,
   DataTable,
@@ -17,30 +17,33 @@ import { VersionCell } from "./VersionCell";
 export const HostGroupMacroTable = () => {
   const macros = useMacros("hostgroup");
 
-  const cols: TableColumn[] = [
-    {
-      ...TABLE_EXPANDABLE_DEFAULT_COLUMN,
-    },
-    { accessor: "name", header: "Name", autoWidth: true },
-    { accessor: "filter", header: "Filter" },
-    { accessor: "updateMode", header: "Update Mode" },
-    {
-      accessor: "desiredVersion",
-      header: "Version",
-      cell: ({ value }) => <VersionCell version={value} />,
-      autoWidth: true,
-    },
-    { accessor: "desiredWindow", header: "Window", cell: ({ value }) => <MaintenanceWindowCell window={value} /> },
-    { id: "hostgroups", header: "Host Groups", cell: ({ row }) => <HostGroupCell macro={row.original as Macro} /> },
-    {
-      id: "actions",
-      header: "",
-      alignment: "right",
-      cell: ({ row }) => <ActionsCell macro={row.original as Macro} />,
-      maxWidth: 100,
-      autoWidth: true,
-    },
-  ];
+  const cols: TableColumn[] = useMemo(
+    () => [
+      {
+        ...TABLE_EXPANDABLE_DEFAULT_COLUMN,
+      },
+      { accessor: "name", header: "Name", autoWidth: true },
+      { accessor: "filter", header: "Filter" },
+      { accessor: "updateMode", header: "Update Mode" },
+      {
+        accessor: "desiredVersion",
+        header: "Version",
+        cell: ({ value }) => <VersionCell version={value} />,
+        autoWidth: true,
+      },
+      { accessor: "desiredWindow", header: "Window", cell: ({ value }) => <MaintenanceWindowCell window={value} /> },
+      { id: "hostgroups", header: "Host Groups", cell: ({ row }) => <HostGroupCell macro={row.original as Macro} /> },
+      {
+        id: "actions",
+        header: "",
+        alignment: "right",
+        cell: ({ row }) => <ActionsCell macro={row.original as Macro} />,
+        maxWidth: 100,
+        autoWidth: true,
+      },
+    ],
+    []
+  );
   if (macros.isError) return <Indicator state="critical">{(macros.error || "").toString()}</Indicator>;
   else if (macros.isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
   if (Array.isArray(macros.data))

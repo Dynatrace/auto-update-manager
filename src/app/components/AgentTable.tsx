@@ -17,8 +17,9 @@ import { agentVersionToString } from "src/app/utils/helperFunctions";
 import { useOutdatedAgents } from "src/app/hooks/useOutdatedAgents";
 
 const safetyCell = ({ value }) => {
-  const jsonval = useMemo(()=>JSON.stringify(value),[value]);
-return (<>{typeof value == "object" ? jsonval : value}</>)};
+  const jsonval = useMemo(() => JSON.stringify(value), [value]);
+  return <>{typeof value == "object" ? jsonval : value}</>;
+};
 
 interface AgentTableProps {
   agentSpecialFilter: "faulty" | "unsupported" | "older" | null;
@@ -107,18 +108,21 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
   if (agents.isError) return <Indicator state="critical">{(agents.error as object).toString()}</Indicator>;
   if (agents.isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
 
-  const cols: TableColumn[] = [
-    { header: "Status", accessor: "updateStatus", cell: safetyCell, autoWidth: true, minWidth: 160 },
-    {
-      header: "Version",
-      accessor: "hostInfo.agentVersion",
-      cell: ({ value }) => agentVersionToString(value),
-    },
-    { header: "Name", accessor: "hostInfo.displayName", cell: safetyCell },
-    { header: "Hostgroup", accessor: "hostInfo.hostGroup.name", cell: safetyCell },
-    { header: "OS", accessor: "hostInfo.osType", cell: safetyCell, autoWidth: true },
-    { header: "NetZone", accessor: "currentNetworkZoneId", cell: safetyCell },
-  ];
+  const cols: TableColumn[] = useMemo(
+    () => [
+      { header: "Status", accessor: "updateStatus", cell: safetyCell, autoWidth: true, minWidth: 160 },
+      {
+        header: "Version",
+        accessor: "hostInfo.agentVersion",
+        cell: ({ value }) => agentVersionToString(value),
+      },
+      { header: "Name", accessor: "hostInfo.displayName", cell: safetyCell },
+      { header: "Hostgroup", accessor: "hostInfo.hostGroup.name", cell: safetyCell },
+      { header: "OS", accessor: "hostInfo.osType", cell: safetyCell, autoWidth: true },
+      { header: "NetZone", accessor: "currentNetworkZoneId", cell: safetyCell },
+    ],
+    []
+  );
   const statuses: HostAgentInfoUpdateStatus[] = [
     ...new Set(
       agents.data.map((d) =>
