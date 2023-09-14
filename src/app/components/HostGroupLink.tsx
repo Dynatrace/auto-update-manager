@@ -4,7 +4,7 @@ import { getEnvironmentUrl } from "@dynatrace-sdk/app-environment";
 import { HostGroup } from "src/app/types/Types";
 
 export const HostGroupLink = ({ hostgroup }: { hostgroup?: HostGroup }) => {
-  if (!hostgroup) return <></>;
+  if (!hostgroup) return null;
   const href = `${getEnvironmentUrl()}/ui/apps/dynatrace.classic.hosts/ui/settings/${
     hostgroup.id
   }/builtin:deployment.oneagent.updates?gtf=-2h&gf=all`;

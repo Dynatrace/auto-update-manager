@@ -6,7 +6,7 @@ import { Indicator } from "./Indicator";
 
 export const HostLink = ({ hostid }: { hostid: string }) => {
   const { data: host, isError, isLoading } = useDQLHostLookup(hostid);
-  if (!hostid) return <></>;
+  if (!hostid) return null;
   if (isLoading) {
     return <ProgressCircle size="small" aria-label="Loading..." />;
   }

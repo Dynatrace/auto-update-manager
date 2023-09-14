@@ -52,5 +52,5 @@ export const HostMacroTable = () => {
         </DataTable.ExpandableRow>
       </DataTable>
     );
-  else return <></>;
+  else return null;
 };
