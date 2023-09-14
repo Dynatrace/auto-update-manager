@@ -44,8 +44,10 @@ export const HostGroupMacroTable = () => {
     ],
     []
   );
+
   if (macros.isError) return <Indicator state="critical">{(macros.error || "").toString()}</Indicator>;
   else if (macros.isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
+  
   if (Array.isArray(macros.data))
     return (
       <DataTable columns={cols} data={macros.data} fullWidth>

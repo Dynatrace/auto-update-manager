@@ -7,14 +7,6 @@ import { MaintenanceWindowCell } from "./MaintenanceWindowCell";
 export const EnvironmentTable = () => {
   const { data, isError, isLoading } = useSettingsReader("builtin:deployment.oneagent.updates", "environment");
 
-  if (isLoading) {
-    return <ProgressCircle size="small" aria-label="Loading..." />;
-  }
-
-  if (isError) {
-    return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
-  }
-
   const cols: TableColumn[] = useMemo(
     () => [
       { accessor: "scope", header: "Scope", autoWidth: true },
@@ -28,6 +20,14 @@ export const EnvironmentTable = () => {
     ],
     []
   );
+
+  if (isLoading) {
+    return <ProgressCircle size="small" aria-label="Loading..." />;
+  }
+
+  if (isError) {
+    return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
+  }
 
   return (
     <div>

@@ -8,14 +8,6 @@ import { HostLink } from "./HostLink";
 export const HostTable = () => {
   const { data, isError, isLoading } = useSettingsReader("builtin:deployment.oneagent.updates", "host");
 
-  if (isLoading) {
-    return <ProgressCircle size="small" aria-label="Loading..." />;
-  }
-
-  if (isError) {
-    return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
-  }
-
   const cols: TableColumn[] = useMemo(
     () => [
       {
@@ -35,6 +27,14 @@ export const HostTable = () => {
     ],
     []
   );
+
+  if (isLoading) {
+    return <ProgressCircle size="small" aria-label="Loading..." />;
+  }
+
+  if (isError) {
+    return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
+  }
 
   return (
     <DataTable columns={cols} data={data} fullWidth>

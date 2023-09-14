@@ -11,14 +11,6 @@ export const HostGroupTable = () => {
   const { data, isError, isLoading } = useSettingsReader("builtin:deployment.oneagent.updates", "hostgroup");
   const allHostGroups = useDQLAllHostGroups();
 
-  if (isLoading) {
-    return <ProgressCircle size="small" aria-label="Loading..." />;
-  }
-
-  if (isError) {
-    return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
-  }
-
   function getHostGroup(id: string) {
     const hg: HostGroup = allHostGroups.data?.find((r) => r.id == id) || { id: id, name: id };
     return hg;
@@ -42,6 +34,14 @@ export const HostGroupTable = () => {
     ],
     []
   );
+
+  if (isLoading) {
+    return <ProgressCircle size="small" aria-label="Loading..." />;
+  }
+
+  if (isError) {
+    return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
+  }
 
   return (
     <DataTable columns={cols} data={data} fullWidth>

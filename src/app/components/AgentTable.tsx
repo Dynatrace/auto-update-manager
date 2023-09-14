@@ -105,9 +105,6 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agents.data, agentSpecialFilter]);
 
-  if (agents.isError) return <Indicator state="critical">{(agents.error as object).toString()}</Indicator>;
-  if (agents.isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
-
   const cols: TableColumn[] = useMemo(
     () => [
       { header: "Status", accessor: "updateStatus", cell: safetyCell, autoWidth: true, minWidth: 160 },
@@ -123,6 +120,10 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
     ],
     []
   );
+
+  if (agents.isError) return <Indicator state="critical">{(agents.error as object).toString()}</Indicator>;
+  if (agents.isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
+  
   const statuses: HostAgentInfoUpdateStatus[] = [
     ...new Set(
       agents.data.map((d) =>

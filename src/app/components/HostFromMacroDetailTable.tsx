@@ -33,17 +33,6 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
     else return match;
   }
 
-  if (hostsFromMacroResult.isError)
-    return <Indicator state="critical">{(hostsFromMacroResult.error || "").toString()}</Indicator>;
-
-  if (hostsFromSettingsResult.isError) {
-    return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
-  }
-
-  if (hostsFromSettingsResult.isLoading || hostsFromMacroResult.isLoading) {
-    return <ProgressCircle size="small" aria-label="Loading..." />;
-  }
-
   const cols: TableColumn[] = useMemo(
     () => [
       {
@@ -93,6 +82,18 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
     ],
     []
   );
+
+  if (hostsFromMacroResult.isError)
+    return <Indicator state="critical">{(hostsFromMacroResult.error || "").toString()}</Indicator>;
+
+  if (hostsFromSettingsResult.isError) {
+    return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
+  }
+
+  if (hostsFromSettingsResult.isLoading || hostsFromMacroResult.isLoading) {
+    return <ProgressCircle size="small" aria-label="Loading..." />;
+  }
+
   const hostWithSettings = hostsFromMacroResult.data.filter(
     (host) => hostsFromSettingsResult?.data?.find((so) => so.scope == host.id) != undefined
   );
