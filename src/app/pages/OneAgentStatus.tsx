@@ -4,7 +4,6 @@ import { UpdateStatusChart } from "../components/UpdateStatusChart";
 import { AgentTable } from "../components/AgentTable";
 import { OutdatedAgents } from "../components/OutdatedAgents";
 import { OneAgentIcon } from "../components/OneAgentIcon";
-import { TitleBarIconWrapper } from "../components/TitleBarIconWrapper";
 
 export const OneAgentStatus = () => {
   const [agentSpecialFilter, setAgentSpecialFilter] = useState<"faulty" | "unsupported" | "older" | null>(null);
@@ -14,9 +13,7 @@ export const OneAgentStatus = () => {
       <Surface>
         <TitleBar>
           <TitleBar.Prefix>
-            <TitleBarIconWrapper>
               <OneAgentIcon />
-            </TitleBarIconWrapper>
           </TitleBar.Prefix>
           <TitleBar.Title>OneAgent status</TitleBar.Title>
         </TitleBar>

@@ -49,6 +49,7 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
       header: "Host",
       id: "host",
       cell: ({ row }) => <HostLink hostid={row.original.id} />,
+      //Note: custom styling cannot be removed, otherwise table is unreadable
       autoWidth: true,
       minWidth: 150,
     },

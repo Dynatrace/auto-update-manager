@@ -5,7 +5,6 @@ import { HostMacroTable } from "../components/HostMacroTable";
 import { PlusIcon } from "@dynatrace/strato-icons";
 import { MacroModal } from "../components/MacroModal";
 import { TriggerIcon } from "@dynatrace/strato-icons";
-import { TitleBarIconWrapper } from "../components/TitleBarIconWrapper";
 
 export const Macros = () => {
   const [macroModalOpen, setMacroModalOpen] = useState(false);
@@ -15,9 +14,7 @@ export const Macros = () => {
       <Surface>
         <TitleBar>
           <TitleBar.Prefix>
-            <TitleBarIconWrapper>
               <TriggerIcon />
-            </TitleBarIconWrapper>
           </TitleBar.Prefix>
           <TitleBar.Title>Macros</TitleBar.Title>
           <TitleBar.Action>

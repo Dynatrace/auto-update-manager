@@ -5,7 +5,6 @@ import { HostGroupTable } from "../components/HostGroupTable";
 import { HostTable } from "../components/HostTable";
 import { HostGroupText } from "../components/HostGroupText";
 import { SettingIcon } from "@dynatrace/strato-icons";
-import { TitleBarIconWrapper } from "../components/TitleBarIconWrapper";
 
 export const CurrentSettings = () => {
   return (
@@ -13,9 +12,7 @@ export const CurrentSettings = () => {
       <Surface>
         <TitleBar>
           <TitleBar.Prefix>
-            <TitleBarIconWrapper>
               <SettingIcon />
-            </TitleBarIconWrapper>
           </TitleBar.Prefix>
           <TitleBar.Title>Current settings</TitleBar.Title>
         </TitleBar>

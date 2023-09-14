@@ -16,6 +16,7 @@ type DetailViewCardProps = {
   text: string;
 };
 
+//Note: custom styling mandated by UX for Sample Apps, cannot remove
 const StyledWrapper = styled(Link)`
   color: ${Colors.Text.Neutral.Default};
   background: ${Colors.Theme.Background[20]};
