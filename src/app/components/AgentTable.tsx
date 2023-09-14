@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   ProgressCircle,
   DataTable,
@@ -16,7 +16,9 @@ import { HostAgentInfo, HostAgentInfoUpdateStatus } from "@dynatrace-sdk/client-
 import { agentVersionToString } from "src/app/utils/helperFunctions";
 import { useOutdatedAgents } from "src/app/hooks/useOutdatedAgents";
 
-const safetyCell = ({ value }) => <>{typeof value == "object" ? JSON.stringify(value) : value}</>;
+const safetyCell = ({ value }) => {
+  const jsonval = useMemo(()=>JSON.stringify(value),[value]);
+return (<>{typeof value == "object" ? jsonval : value}</>)};
 
 interface AgentTableProps {
   agentSpecialFilter: "faulty" | "unsupported" | "older" | null;
