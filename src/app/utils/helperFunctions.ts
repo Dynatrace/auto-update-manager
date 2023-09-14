@@ -16,7 +16,8 @@ const displayVersionFromSettings = (settings: SettingsObject) => {
 
 const agentVersionToString = (version?: AgentVersion) => {
   if (typeof version === "undefined") return "";
-  return version.major + "." + version.minor + "." + version.revision + "." + version.timestamp;
+const {major, minor, revision, timestamp } = version;
+return `${major}.${minor}.${revision}.${timestamp}`;
 };
 
 export { testMaintenanceWindows, displayVersionFromSettings, agentVersionToString };
