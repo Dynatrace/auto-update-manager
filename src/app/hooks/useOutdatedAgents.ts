@@ -10,14 +10,14 @@ export const useOutdatedAgents = () => {
     ?.map((v) => (typeof v != "undefined" ? parseInt(v.split(".")[1]) : 0))
     .sort((a, b) => b - a)[0] as number;
   const oldestSupported = currentVersion - 24;
-  const unsupported = agents.data
-    ?.filter((a) => typeof a.hostInfo?.agentVersion != "undefined")
-    .filter((a) => (a.hostInfo?.agentVersion?.minor || 0) < oldestSupported)
-    || [];
-  const older = agents.data
-    ?.filter((a) => typeof a.hostInfo?.agentVersion != "undefined")
-    .filter((a) => (a.hostInfo?.agentVersion?.minor || 0) < currentVersion - 12)
-    || [];
+  const unsupported =
+    agents.data
+      ?.filter((a) => typeof a.hostInfo?.agentVersion != "undefined")
+      .filter((a) => (a.hostInfo?.agentVersion?.minor || 0) < oldestSupported) || [];
+  const older =
+    agents.data
+      ?.filter((a) => typeof a.hostInfo?.agentVersion != "undefined")
+      .filter((a) => (a.hostInfo?.agentVersion?.minor || 0) < currentVersion - 12) || [];
 
   return {
     isError: versions.isError || agents.isError,

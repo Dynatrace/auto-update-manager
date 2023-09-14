@@ -6,17 +6,17 @@ const testMaintenanceWindows = (windows = [], window: string) => {
   return JSON.stringify(windows) == JSON.stringify([{ maintenanceWindow: window }]);
 };
 
-const displayVersionFromSettings = (settings:SettingsObject) => {
-  if(settings.value.targetVersion == undefined) return "";
-  if(settings.value.targetVersion.startsWith("1.")){
-    if(typeof(settings.value.revision)=="string" && settings.value.revision.match(/[0-9\.]+/))
-    return settings.value.targetVersion + '.' + settings.value.revision;
+const displayVersionFromSettings = (settings: SettingsObject) => {
+  if (settings.value.targetVersion == undefined) return "";
+  if (settings.value.targetVersion.startsWith("1.")) {
+    if (typeof settings.value.revision == "string" && settings.value.revision.match(/[0-9\.]+/))
+      return settings.value.targetVersion + "." + settings.value.revision;
   } else return settings.value.targetVersion;
-}
+};
 
-const agentVersionToString = (version?:AgentVersion)=> {
-  if(typeof(version)=="undefined")return "";
-  return version.major + "." + version.minor + "." + version.revision + "." + version.timestamp
-}
+const agentVersionToString = (version?: AgentVersion) => {
+  if (typeof version == "undefined") return "";
+  return version.major + "." + version.minor + "." + version.revision + "." + version.timestamp;
+};
 
 export { testMaintenanceWindows, displayVersionFromSettings, agentVersionToString };

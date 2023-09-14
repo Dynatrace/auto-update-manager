@@ -5,7 +5,7 @@ import { stateClient } from "@dynatrace-sdk/client-state";
 
 type scopeType = "hostgroup" | "host";
 
-const loadMacrosFromServer = async (scope?: scopeType):Promise<Macro[]> => {
+const loadMacrosFromServer = async (scope?: scopeType): Promise<Macro[]> => {
   try {
     const appState = await stateClient.getAppState({ key: "macros" });
     if (typeof appState?.value == "string") {
@@ -33,7 +33,7 @@ export const useMacros = (scope?: scopeType) => {
   const meta: Meta = {
     errorTitle: "Failed to query macros",
   };
-  return useQuery<Macro[],unknown,Macro[],QueryKey>({
+  return useQuery<Macro[], unknown, Macro[], QueryKey>({
     queryFn: () => loadMacrosFromServer(scope),
     queryKey: ["macros"],
     select: filterMacros,

@@ -33,16 +33,16 @@ export const App = () => {
         <AppHeader>
           <AppHeader.NavItems>
             <AppHeader.AppNavLink as={RouterLink} to="/" />
-            <AppHeader.NavItem as={RouterLink} to="/current_settings" >
+            <AppHeader.NavItem as={RouterLink} to="/current_settings">
               <SettingIcon />
               Current settings
             </AppHeader.NavItem>
             <AppHeader.NavItem as={RouterLink} to="/macros">
-              <TriggerIcon/>
+              <TriggerIcon />
               Macros
             </AppHeader.NavItem>
             <AppHeader.NavItem as={RouterLink} to="/oneagent_status">
-              <OneAgentIcon/>
+              <OneAgentIcon />
               OneAgent status
             </AppHeader.NavItem>
           </AppHeader.NavItems>

@@ -16,22 +16,25 @@ export const HostTable = () => {
     return <Indicator state="critical">There was an error fetching AutoUpdate settings</Indicator>;
   }
 
-  const cols: TableColumn[] = useMemo(()=>[
-    {
-      accessor: "scope",
-      header: "Scope",
-      cell: ({ value }) => <HostLink hostid={value} />,
-      autoWidth: true,
-      minWidth: 250,
-    },
-    { accessor: "value.updateMode", header: "Update Mode" },
-    { accessor: "value.targetVersion", header: "Target Version" },
-    {
-      accessor: "value.maintenanceWindows",
-      header: "Update Windows",
-      cell: ({ value }) => <MaintenanceWindowCell windows={value} />,
-    },
-  ],[]);
+  const cols: TableColumn[] = useMemo(
+    () => [
+      {
+        accessor: "scope",
+        header: "Scope",
+        cell: ({ value }) => <HostLink hostid={value} />,
+        autoWidth: true,
+        minWidth: 250,
+      },
+      { accessor: "value.updateMode", header: "Update Mode" },
+      { accessor: "value.targetVersion", header: "Target Version" },
+      {
+        accessor: "value.maintenanceWindows",
+        header: "Update Windows",
+        cell: ({ value }) => <MaintenanceWindowCell windows={value} />,
+      },
+    ],
+    []
+  );
 
   return (
     <DataTable columns={cols} data={data} fullWidth>

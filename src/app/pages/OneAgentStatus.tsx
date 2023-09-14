@@ -13,7 +13,7 @@ export const OneAgentStatus = () => {
       <Surface>
         <TitleBar>
           <TitleBar.Prefix>
-              <OneAgentIcon />
+            <OneAgentIcon />
           </TitleBar.Prefix>
           <TitleBar.Title>OneAgent status</TitleBar.Title>
         </TitleBar>

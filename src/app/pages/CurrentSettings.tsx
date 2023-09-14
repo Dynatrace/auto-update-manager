@@ -12,7 +12,7 @@ export const CurrentSettings = () => {
       <Surface>
         <TitleBar>
           <TitleBar.Prefix>
-              <SettingIcon />
+            <SettingIcon />
           </TitleBar.Prefix>
           <TitleBar.Title>Current settings</TitleBar.Title>
         </TitleBar>

@@ -1,9 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Meta } from "../types/Meta";
-import {
-  settingsObjectsClient,
-  SettingsObject,
-} from "@dynatrace-sdk/client-classic-environment-v2";
+import { settingsObjectsClient, SettingsObject } from "@dynatrace-sdk/client-classic-environment-v2";
 import { SchemaType, Macro, HostGroup } from "../types/Types";
 
 const UPDATES_SCHEMA: SchemaType = "builtin:deployment.oneagent.updates";

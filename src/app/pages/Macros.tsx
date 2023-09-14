@@ -14,7 +14,7 @@ export const Macros = () => {
       <Surface>
         <TitleBar>
           <TitleBar.Prefix>
-              <TriggerIcon />
+            <TriggerIcon />
           </TitleBar.Prefix>
           <TitleBar.Title>Macros</TitleBar.Title>
           <TitleBar.Action>

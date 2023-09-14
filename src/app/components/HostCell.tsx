@@ -48,9 +48,7 @@ export const HostCell = ({ macro }: { macro: Macro }) => {
       <InformationOverlay variant="warning">
         <InformationOverlay.Content>Results possibly limited to 1000</InformationOverlay.Content>
       </InformationOverlay>
-    ) : (
-      <></>
-    );
+    ) : null;
 
   if (compliantHosts.length < 1) {
     return (

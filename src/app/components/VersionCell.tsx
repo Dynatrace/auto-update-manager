@@ -9,9 +9,9 @@ interface VersionCellProps {
 export const VersionCell = ({ version }: VersionCellProps) => {
   const versionsRes = useVersions();
 
-  if (versionsRes.isError || versionsRes.isLoading) return <>{version}</>
+  if (versionsRes.isError || versionsRes.isLoading) return <>{version}</>;
 
-  if (!versionsRes.data.includes(version) && !["latest","previous","older"].includes(version))
+  if (!versionsRes.data.includes(version) && !["latest", "previous", "older"].includes(version))
     return (
       <>
         <InformationOverlay variant="critical">
@@ -20,5 +20,5 @@ export const VersionCell = ({ version }: VersionCellProps) => {
         {version}
       </>
     );
-  return <>{version}</>
+  return <>{version}</>;
 };

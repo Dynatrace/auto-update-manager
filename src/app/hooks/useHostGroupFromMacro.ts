@@ -17,8 +17,8 @@ async function fetcher(macro: Macro) {
     |filter isNotNull(host_group_id)
     |summarize by:{host_group_id,host_group=lookup.entity.name}, count=count()`;
 
-    let hostgroups: HostGroup[] = [];
-   const res = await queryExecutionClient.queryExecute({
+  let hostgroups: HostGroup[] = [];
+  const res = await queryExecutionClient.queryExecute({
     body: {
       query,
       requestTimeoutMilliseconds: 5000,
@@ -38,7 +38,7 @@ async function fetcher(macro: Macro) {
 
 export function useHostGroupFromMacro(macro: Macro) {
   return useQuery({
-    queryFn: () =>  fetcher(macro),
-    queryKey: ['hostgroups', macro.name],
+    queryFn: () => fetcher(macro),
+    queryKey: ["hostgroups", macro.name],
   });
 }

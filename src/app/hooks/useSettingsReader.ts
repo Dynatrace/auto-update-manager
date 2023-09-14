@@ -26,14 +26,14 @@ export function useSettingsReader(schema: SchemaType, selector?: SelectorType) {
     errorTitle: "Failed to read settings",
   };
 
-  function selectorFn(objs: SettingsObject[]):SettingsObject[] {
-    switch(selector){
+  function selectorFn(objs: SettingsObject[]): SettingsObject[] {
+    switch (selector) {
       case "environment":
-        return objs.filter(o => o.scope == "environment");
+        return objs.filter((o) => o.scope == "environment");
       case "hostgroup":
-        return objs.filter(o => o.scope?.startsWith("HOST_GROUP-"));
+        return objs.filter((o) => o.scope?.startsWith("HOST_GROUP-"));
       case "host":
-        return objs.filter(o => o.scope?.startsWith("HOST-"));
+        return objs.filter((o) => o.scope?.startsWith("HOST-"));
       default:
         return objs;
     }
@@ -43,6 +43,6 @@ export function useSettingsReader(schema: SchemaType, selector?: SelectorType) {
     queryFn: () => fetcher(schema),
     queryKey: ["auto-update-settings", schema],
     meta,
-    select: selectorFn
+    select: selectorFn,
   });
 }
