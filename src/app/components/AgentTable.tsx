@@ -16,7 +16,7 @@ import { HostAgentInfo, HostAgentInfoUpdateStatus } from "@dynatrace-sdk/client-
 import { agentVersionToString } from "src/app/utils/helperFunctions";
 import { useOutdatedAgents } from "src/app/hooks/useOutdatedAgents";
 
-const safetyCell = ({ value }) => {
+const SafetyCell = ({ value }) => {
   const jsonval = useMemo(() => JSON.stringify(value), [value]);
   return <>{typeof value == "object" ? jsonval : value}</>;
 };
@@ -107,23 +107,23 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
 
   const cols: TableColumn[] = useMemo(
     () => [
-      { header: "Status", accessor: "updateStatus", cell: safetyCell, autoWidth: true, minWidth: 160 },
+      { header: "Status", accessor: "updateStatus", cell: SafetyCell, autoWidth: true, minWidth: 160 },
       {
         header: "Version",
         accessor: "hostInfo.agentVersion",
         cell: ({ value }) => agentVersionToString(value),
       },
-      { header: "Name", accessor: "hostInfo.displayName", cell: safetyCell },
-      { header: "Hostgroup", accessor: "hostInfo.hostGroup.name", cell: safetyCell },
-      { header: "OS", accessor: "hostInfo.osType", cell: safetyCell, autoWidth: true },
-      { header: "NetZone", accessor: "currentNetworkZoneId", cell: safetyCell },
+      { header: "Name", accessor: "hostInfo.displayName", cell: SafetyCell },
+      { header: "Hostgroup", accessor: "hostInfo.hostGroup.name", cell: SafetyCell },
+      { header: "OS", accessor: "hostInfo.osType", cell: SafetyCell, autoWidth: true },
+      { header: "NetZone", accessor: "currentNetworkZoneId", cell: SafetyCell },
     ],
     []
   );
 
   if (agents.isError) return <Indicator state="critical">{(agents.error as object).toString()}</Indicator>;
   if (agents.isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
-  
+
   const statuses: HostAgentInfoUpdateStatus[] = [
     ...new Set(
       agents.data.map((d) =>

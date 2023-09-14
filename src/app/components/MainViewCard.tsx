@@ -8,12 +8,12 @@ export const MainViewCard = () => {
   return (
     <Flex
       style={{
-        borderStyle: `${Borders.Style.Default}`,
-        borderWidth: `${Borders.Width.Emphasized}`,
-        borderRadius: `${Borders.Radius.Container.Default}`,
-        borderColor: `${Colors.Border.Primary.Default}`,
-        color: `${Colors.Text.Primary.Default}`,
-        backgroundColor: `${Colors.Background.Container.Primary.Default}`,
+        borderStyle: Borders.Style.Default,
+        borderWidth: Borders.Width.Emphasized,
+        borderRadius: Borders.Radius.Container.Default,
+        borderColor: Colors.Border.Primary.Default,
+        color: Colors.Text.Primary.Default,
+        backgroundColor: Colors.Background.Container.Primary.Default,
         padding: `${Spacings.Size12} ${Spacings.Size16}`,
       }}
       flexWrap="wrap"

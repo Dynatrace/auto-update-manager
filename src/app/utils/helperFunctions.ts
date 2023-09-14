@@ -15,7 +15,7 @@ const displayVersionFromSettings = (settings: SettingsObject) => {
 };
 
 const agentVersionToString = (version?: AgentVersion) => {
-  if (typeof version == "undefined") return "";
+  if (typeof version === "undefined") return "";
   return version.major + "." + version.minor + "." + version.revision + "." + version.timestamp;
 };
 

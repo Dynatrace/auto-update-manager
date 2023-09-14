@@ -42,7 +42,7 @@ export const DetailViewCard = ({ href, imgSrc, headline, text }: DetailViewCardP
               borderRadius: `${Borders.Radius.Container.Default}`,
             }}
           >
-            <img src={imgSrc} width="56px" />
+            <img src={imgSrc} width="56px" alt={headline} />
           </Flex>
         </Flex>
         <Flex flexGrow={1} alignSelf={"center"} flexDirection="column" gap={4}>

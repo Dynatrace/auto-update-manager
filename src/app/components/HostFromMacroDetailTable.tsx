@@ -48,9 +48,9 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
         id: "updateMode",
         cell: ({ row }) => {
           const updateMode = lookupSettings(row, "updateMode");
-          if (updateMode == "MANUAL") return <Indicator state="critical">{updateMode}</Indicator>;
-          else if (updateMode == macro.updateMode) return <>{updateMode}</>;
-          else return <Indicator state="warning">{updateMode}</Indicator>;
+          if (updateMode === "MANUAL") return <Indicator state="critical">{updateMode}</Indicator>;
+          if (updateMode === macro.updateMode) return <>{updateMode}</>;
+          return <Indicator state="warning">{updateMode}</Indicator>;
         },
       },
       {
@@ -59,8 +59,8 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
         cell: ({ row }) => {
           const settings = lookupSettings(row);
           const displayVersion = displayVersionFromSettings(settings);
-          if (displayVersion == macro.desiredVersion) return <>{displayVersion}</>;
-          else return <Indicator state="warning">{displayVersion}</Indicator>;
+          if (displayVersion === macro.desiredVersion) return <>{displayVersion}</>;
+          return <Indicator state="warning">{displayVersion}</Indicator>;
         },
       },
       {
@@ -70,13 +70,11 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
           const maintenanceWindows = lookupSettings(row, "maintenanceWindows");
           if (testMaintenanceWindows(maintenanceWindows, macro.desiredWindow))
             return <MaintenanceWindowCell windows={maintenanceWindows} />;
-          else {
-            return (
-              <Indicator state="warning">
-                <MaintenanceWindowCell windows={maintenanceWindows} />
-              </Indicator>
-            );
-          }
+          return (
+            <Indicator state="warning">
+              <MaintenanceWindowCell windows={maintenanceWindows} />
+            </Indicator>
+          );
         },
       },
     ],

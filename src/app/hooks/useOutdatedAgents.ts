@@ -12,11 +12,11 @@ export const useOutdatedAgents = () => {
   const oldestSupported = currentVersion - 24;
   const unsupported =
     agents.data
-      ?.filter((a) => typeof a.hostInfo?.agentVersion != "undefined")
+      ?.filter((a) => typeof a.hostInfo?.agentVersion !== "undefined")
       .filter((a) => (a.hostInfo?.agentVersion?.minor || 0) < oldestSupported) || [];
   const older =
     agents.data
-      ?.filter((a) => typeof a.hostInfo?.agentVersion != "undefined")
+      ?.filter((a) => typeof a.hostInfo?.agentVersion !== "undefined")
       .filter((a) => (a.hostInfo?.agentVersion?.minor || 0) < currentVersion - 12) || [];
 
   return {
