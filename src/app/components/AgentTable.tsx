@@ -198,7 +198,7 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
           </Select>
         </FilterBar.Item>
       </FilterBar>
-      <DataTable data={filteredData} columns={cols} sortable lineWrap={true} fullWidth>
+      <DataTable data={filteredData} columns={cols} sortable lineWrap fullWidth>
         <DataTable.Pagination defaultPageSize={10} />
       </DataTable>
     </Flex>
