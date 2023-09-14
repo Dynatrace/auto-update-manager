@@ -23,7 +23,7 @@ import { useVersions } from "src/app/hooks/useVersions";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
 import { useMacros } from "src/app/hooks/useMacros";
 import { useAddMacro } from "src/app/hooks/useAddMacro";
-import { Indicator } from "../Indicator";
+import { Indicator } from "./Indicator";
 import { Macro } from "src/app/types/Types";
 
 type MacroModalProps = {

@@ -2,7 +2,7 @@ import React from "react";
 import { ExternalLink, ProgressCircle } from "@dynatrace/strato-components-preview";
 import { getEnvironmentUrl } from "@dynatrace-sdk/app-environment";
 import { useDQLHostLookup } from "src/app/hooks/useDQLHostLookup";
-import { Indicator } from "../Indicator";
+import { Indicator } from "./Indicator";
 
 export const HostLink = ({ hostid }: { hostid: string }) => {
   const { data: host, isError, isLoading } = useDQLHostLookup(hostid);

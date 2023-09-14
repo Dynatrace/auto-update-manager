@@ -1,11 +1,11 @@
 import React from "react";
 import { Flex, Surface, Text, Tabs, Tab, TitleBar } from "@dynatrace/strato-components-preview";
-import { EnvironmentTable } from "../components/tables/EnvironmentTable";
-import { HostGroupTable } from "../components/tables/HostGroupTable";
-import { HostTable } from "../components/tables/HostTable";
+import { EnvironmentTable } from "../components/EnvironmentTable";
+import { HostGroupTable } from "../components/HostGroupTable";
+import { HostTable } from "../components/HostTable";
 import { HostGroupText } from "../components/HostGroupText";
 import { SettingIcon } from "@dynatrace/strato-icons";
-import { TitleBarIconWrapper } from "../components/customIcons/TitleBarIconWrapper";
+import { TitleBarIconWrapper } from "../components/TitleBarIconWrapper";
 
 export const CurrentSettings = () => {
   return (

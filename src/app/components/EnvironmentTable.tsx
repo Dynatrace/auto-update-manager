@@ -1,8 +1,8 @@
 import React from "react";
 import { DataTable, ProgressCircle, TableColumn } from "@dynatrace/strato-components-preview";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
-import { Indicator } from "../Indicator";
-import { MaintenanceWindowCell } from "./cells/MaintenanceWindowCell";
+import { Indicator } from "./Indicator";
+import { MaintenanceWindowCell } from "./MaintenanceWindowCell";
 
 export const EnvironmentTable = () => {
   const { data, isError, isLoading } = useSettingsReader("builtin:deployment.oneagent.updates", "environment");

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Flex, Surface, Text, Button, TitleBar, Tabs, Tab } from "@dynatrace/strato-components-preview";
-import { HostGroupMacroTable } from "../components/tables/HostGroupMacroTable";
-import { HostMacroTable } from "../components/tables/HostMacroTable";
+import { HostGroupMacroTable } from "../components/HostGroupMacroTable";
+import { HostMacroTable } from "../components/HostMacroTable";
 import { PlusIcon } from "@dynatrace/strato-icons";
-import { MacroModal } from "../components/modals/MacroModal";
+import { MacroModal } from "../components/MacroModal";
 import { TriggerIcon } from "@dynatrace/strato-icons";
-import { TitleBarIconWrapper } from "../components/customIcons/TitleBarIconWrapper";
+import { TitleBarIconWrapper } from "../components/TitleBarIconWrapper";
 
 export const Macros = () => {
   const [macroModalOpen, setMacroModalOpen] = useState(false);

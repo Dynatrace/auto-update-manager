@@ -11,7 +11,7 @@ import {
   TableColumn,
 } from "@dynatrace/strato-components-preview";
 import { useOneAgentOnAHost } from "src/app/hooks/useOneAgentOnAHost";
-import { Indicator } from "../Indicator";
+import { Indicator } from "./Indicator";
 import { HostAgentInfo, HostAgentInfoUpdateStatus } from "@dynatrace-sdk/client-classic-environment-v1";
 import { agentVersionToString } from "src/app/utils/helperFunctions";
 import { useOutdatedAgents } from "src/app/hooks/useOutdatedAgents";

@@ -11,14 +11,14 @@ import {
 } from "@dynatrace/strato-components-preview/";
 import { DetailViewCard } from "./components/DetailViewCard";
 import { MainViewCard } from "./components/MainViewCard";
-import { AutoUpdateTerminology } from "./components/terminologyOverlays/AutoUpdateTerminology";
-import { HostgroupTerminology } from "./components/terminologyOverlays/HostgroupTerminology";
+import { AutoUpdateTerminology } from "./components/AutoUpdateTerminology";
+import { HostgroupTerminology } from "./components/HostgroupTerminology";
 import { MaximizeIcon, MinimizeIcon, SettingIcon, TriggerIcon } from "@dynatrace/strato-icons";
 import { Route, NavLink as RouterLink, Routes, Navigate } from "react-router-dom";
 import { CurrentSettings } from "./pages/CurrentSettings";
 import { Macros } from "./pages/Macros";
 import { OneAgentStatus } from "./pages/OneAgentStatus";
-import { OneAgentIcon } from "./components/customIcons/OneAgentIcon";
+import { OneAgentIcon } from "./components/OneAgentIcon";
 
 export const App = () => {
   const theme = useCurrentTheme();

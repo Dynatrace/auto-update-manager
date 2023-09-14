@@ -1,9 +1,9 @@
 import React from "react";
 import { DataTable, ProgressCircle, TableColumn } from "@dynatrace/strato-components-preview";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
-import { Indicator } from "../Indicator";
-import { MaintenanceWindowCell } from "./cells/MaintenanceWindowCell";
-import { HostLink } from "../links/HostLink";
+import { Indicator } from "./Indicator";
+import { MaintenanceWindowCell } from "./MaintenanceWindowCell";
+import { HostLink } from "./HostLink";
 
 export const HostTable = () => {
   const { data, isError, isLoading } = useSettingsReader("builtin:deployment.oneagent.updates", "host");

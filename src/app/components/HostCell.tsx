@@ -2,7 +2,7 @@ import React from "react";
 import { ProgressCircle, InformationOverlay } from "@dynatrace/strato-components-preview";
 import { useHostFromMacro } from "src/app/hooks/useHostFromMacro";
 import { Macro, Host } from "src/app/types/Types";
-import { Indicator } from "../../Indicator";
+import { Indicator } from "./Indicator";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
 import { testMaintenanceWindows, displayVersionFromSettings } from "src/app/utils/helperFunctions";
 

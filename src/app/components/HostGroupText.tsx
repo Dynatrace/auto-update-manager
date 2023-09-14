@@ -3,7 +3,7 @@ import { useDQLAllHostGroups } from "../hooks/useDQLAllHostGroups";
 import { useSettingsReader } from "../hooks/useSettingsReader";
 import { Text, ExpandableText, ProgressCircle, List } from "@dynatrace/strato-components-preview";
 import { Indicator } from "./Indicator";
-import { HostGroupLink } from "./links/HostGroupLink";
+import { HostGroupLink } from "./HostGroupLink";
 
 export const HostGroupText = () => {
   const allHostGroups = useDQLAllHostGroups();

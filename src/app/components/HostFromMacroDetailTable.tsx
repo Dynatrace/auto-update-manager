@@ -9,9 +9,9 @@ import {
   List,
 } from "@dynatrace/strato-components-preview";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
-import { Indicator } from "../Indicator";
-import { MaintenanceWindowCell } from "./cells/MaintenanceWindowCell";
-import { HostLink } from "../links/HostLink";
+import { Indicator } from "./Indicator";
+import { MaintenanceWindowCell } from "./MaintenanceWindowCell";
+import { HostLink } from "./HostLink";
 import { Host, Macro } from "src/app/types/Types";
 import { useHostFromMacro } from "src/app/hooks/useHostFromMacro";
 import { testMaintenanceWindows } from "src/app/utils/helperFunctions";

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Flex, Surface, Text, TitleBar } from "@dynatrace/strato-components-preview";
-import { UpdateStatusChart } from "../components/charts/UpdateStatusChart";
-import { AgentTable } from "../components/tables/AgentTable";
+import { UpdateStatusChart } from "../components/UpdateStatusChart";
+import { AgentTable } from "../components/AgentTable";
 import { OutdatedAgents } from "../components/OutdatedAgents";
-import { OneAgentIcon } from "../components/customIcons/OneAgentIcon";
-import { TitleBarIconWrapper } from "../components/customIcons/TitleBarIconWrapper";
+import { OneAgentIcon } from "../components/OneAgentIcon";
+import { TitleBarIconWrapper } from "../components/TitleBarIconWrapper";
 
 export const OneAgentStatus = () => {
   const [agentSpecialFilter, setAgentSpecialFilter] = useState<"faulty" | "unsupported" | "older" | null>(null);

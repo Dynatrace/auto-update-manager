@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { ProgressCircle, DonutChart, PieChartRef } from "@dynatrace/strato-components-preview";
 import { useOneAgentOnAHost } from "src/app/hooks/useOneAgentOnAHost";
-import { Indicator } from "../Indicator";
+import { Indicator } from "./Indicator";
 
 export const UpdateStatusChart = () => {
   const agents = useOneAgentOnAHost({ includeDetails: false });
