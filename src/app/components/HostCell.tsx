@@ -44,7 +44,7 @@ export const HostCell = ({ macro }: { macro: Macro }) => {
     compliantHosts.push(...hostWithoutSettings);
 
   const hostLimited =
-    hostsFromMacroResult.data.length == 1000 ? (
+    hostsFromMacroResult.data.length === 1000 ? (
       <InformationOverlay variant="warning">
         <InformationOverlay.Content>Results possibly limited to 1000</InformationOverlay.Content>
       </InformationOverlay>
