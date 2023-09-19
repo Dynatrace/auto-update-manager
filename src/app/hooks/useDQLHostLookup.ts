@@ -3,7 +3,7 @@ import { queryExecutionClient } from "@dynatrace-sdk/client-query";
 import { Meta } from "../types/Meta";
 import { Host } from "../types/Types";
 
-async function fetcher(hostid:string) {
+async function fetcher(hostid: string) {
   const res = await queryExecutionClient.queryExecute({
     body: {
       //lookup host
@@ -15,7 +15,7 @@ async function fetcher(hostid:string) {
     },
   });
   if (res.result?.records) {
-    const hosts:Host[] = res.result.records
+    const hosts: Host[] = res.result.records
       .filter((r): r is { id: string; "entity.name": string } => r != null)
       .map((r) => ({
         id: r["id"],
@@ -25,13 +25,13 @@ async function fetcher(hostid:string) {
   }
   return [];
 }
-export const useDQLHostLookup = (hostid:string) => {
+export const useDQLHostLookup = (hostid: string) => {
   const meta: Meta = {
     errorTitle: "Failed to query host",
   };
   return useQuery({
     queryFn: () => fetcher(hostid),
-    queryKey: ["hosts",{hostid}],
+    queryKey: ["hosts", { hostid }],
     meta,
   });
 };

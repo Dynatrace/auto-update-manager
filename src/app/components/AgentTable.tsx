@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   ProgressCircle,
   DataTable,
@@ -11,12 +11,15 @@ import {
   TableColumn,
 } from "@dynatrace/strato-components-preview";
 import { useOneAgentOnAHost } from "src/app/hooks/useOneAgentOnAHost";
-import { Indicator } from "../Indicator";
+import { Indicator } from "./Indicator";
 import { HostAgentInfo, HostAgentInfoUpdateStatus } from "@dynatrace-sdk/client-classic-environment-v1";
 import { agentVersionToString } from "src/app/utils/helperFunctions";
 import { useOutdatedAgents } from "src/app/hooks/useOutdatedAgents";
 
-const safetyCell = ({ value }) => <>{typeof value == "object" ? JSON.stringify(value) : value}</>;
+const SafetyCell = ({ value }) => {
+  const jsonval = useMemo(() => JSON.stringify(value), [value]);
+  return <>{typeof value == "object" ? jsonval : value}</>;
+};
 
 interface AgentTableProps {
   agentSpecialFilter: "faulty" | "unsupported" | "older" | null;
@@ -40,7 +43,6 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
           tmpData = tmpData.filter((h) => outdatedAgents.faultyAgents.includes(h));
           break;
         case "unsupported":
-          // debugger;
           tmpData = tmpData.filter((h) => outdatedAgents.unsupported.includes(h));
           break;
         case "older":
@@ -78,7 +80,6 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
                   tmpData = tmpData.filter((h) => outdatedAgents.faultyAgents.includes(h));
                   break;
                 case "unsupported":
-                  // debugger;
                   tmpData = tmpData.filter((h) => outdatedAgents.unsupported.includes(h));
                   break;
                 case "older":
@@ -104,22 +105,25 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agents.data, agentSpecialFilter]);
 
+  const cols: TableColumn[] = useMemo(
+    () => [
+      { header: "Status", accessor: "updateStatus", cell: SafetyCell, autoWidth: true, minWidth: 160 },
+      {
+        header: "Version",
+        accessor: "hostInfo.agentVersion",
+        cell: ({ value }) => agentVersionToString(value),
+      },
+      { header: "Name", accessor: "hostInfo.displayName", cell: SafetyCell },
+      { header: "Hostgroup", accessor: "hostInfo.hostGroup.name", cell: SafetyCell },
+      { header: "OS", accessor: "hostInfo.osType", cell: SafetyCell, autoWidth: true },
+      { header: "NetZone", accessor: "currentNetworkZoneId", cell: SafetyCell },
+    ],
+    []
+  );
+
   if (agents.isError) return <Indicator state="critical">{(agents.error as object).toString()}</Indicator>;
   if (agents.isLoading) return <ProgressCircle size="small" aria-label="Loading..." />;
 
-  const cols: TableColumn[] = [
-    { header: "Status", accessor: "updateStatus", cell: safetyCell, autoWidth: true, minWidth: 160 },
-    {
-      header: "Version",
-      accessor: "hostInfo.agentVersion",
-      cell: ({ value }) => agentVersionToString(value),
-    },
-    { header: "Name", accessor: "hostInfo.displayName", cell: safetyCell },
-    { header: "Hostgroup", accessor: "hostInfo.hostGroup.name", cell: safetyCell },
-    { header: "OS", accessor: "hostInfo.osType", cell: safetyCell, autoWidth: true },
-    // { header: "AutoInjection", accessor: "hostInfo.autoInjection", cell: safetyCell },
-    { header: "NetZone", accessor: "currentNetworkZoneId", cell: safetyCell },
-  ];
   const statuses: HostAgentInfoUpdateStatus[] = [
     ...new Set(
       agents.data.map((d) =>
@@ -133,7 +137,6 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
   ];
 
   const osTypes = [...new Set(agents.data.map((d) => d.hostInfo?.osType))];
-  // const autoInjection = [...new Set(agents.data.map((d) => d.hostInfo?.autoInjection))];
   const netZones = [
     ...new Set(agents.data.map((d) => d.currentNetworkZoneId).filter((nz) => typeof nz != "undefined")),
   ];
@@ -200,7 +203,7 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
           </Select>
         </FilterBar.Item>
       </FilterBar>
-      <DataTable data={filteredData} columns={cols} sortable lineWrap={true} fullWidth>
+      <DataTable data={filteredData} columns={cols} sortable lineWrap fullWidth>
         <DataTable.Pagination defaultPageSize={10} />
       </DataTable>
     </Flex>

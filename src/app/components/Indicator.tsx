@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
-import { Colors } from '@dynatrace/strato-design-tokens';
-import { Flex } from '@dynatrace/strato-components-preview';
+import React, { ReactNode } from "react";
+import { Colors } from "@dynatrace/strato-design-tokens";
+import { Flex } from "@dynatrace/strato-components-preview";
 
-type IndicatorState = 'critical' | 'success' | 'warning' | 'neutral';
+type IndicatorState = "critical" | "success" | "warning" | "neutral";
 
 type IndicatorStateMap = { [key in IndicatorState]: string };
 

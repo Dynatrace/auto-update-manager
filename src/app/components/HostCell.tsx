@@ -2,7 +2,7 @@ import React from "react";
 import { ProgressCircle, InformationOverlay } from "@dynatrace/strato-components-preview";
 import { useHostFromMacro } from "src/app/hooks/useHostFromMacro";
 import { Macro, Host } from "src/app/types/Types";
-import { Indicator } from "../../Indicator";
+import { Indicator } from "./Indicator";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
 import { testMaintenanceWindows, displayVersionFromSettings } from "src/app/utils/helperFunctions";
 
@@ -44,16 +44,13 @@ export const HostCell = ({ macro }: { macro: Macro }) => {
     compliantHosts.push(...hostWithoutSettings);
 
   const hostLimited =
-    hostsFromMacroResult.data.length == 1000 ? (
+    hostsFromMacroResult.data.length === 1000 ? (
       <InformationOverlay variant="warning">
         <InformationOverlay.Content>Results possibly limited to 1000</InformationOverlay.Content>
       </InformationOverlay>
-    ) : (
-      <></>
-    );
+    ) : null;
 
   if (compliantHosts.length < 1) {
-    // debugger;
     return (
       <Indicator state="critical">
         {compliantHosts.length} / {hostsFromMacroResult.data.length} {hostLimited}

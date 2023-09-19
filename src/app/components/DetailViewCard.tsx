@@ -1,13 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  Flex,
-  Heading,
-  Link,
-  Text,
-} from '@dynatrace/strato-components-preview';
-import { Colors, Spacings, Borders, BoxShadows } from '@dynatrace/strato-design-tokens';
-import { ExternalLinkIcon } from '@dynatrace/strato-icons';
+import { Flex, Heading, Link, Text } from "@dynatrace/strato-components-preview";
+import { Colors, Spacings, Borders, BoxShadows } from "@dynatrace/strato-design-tokens";
+import { ExternalLinkIcon } from "@dynatrace/strato-icons";
 
 type DetailViewCardProps = {
   href: string;
@@ -16,6 +11,7 @@ type DetailViewCardProps = {
   text: string;
 };
 
+//Note: custom styling mandated by UX for Sample Apps, cannot remove
 const StyledWrapper = styled(Link)`
   color: ${Colors.Text.Neutral.Default};
   background: ${Colors.Theme.Background[20]};
@@ -31,12 +27,7 @@ const StyledWrapper = styled(Link)`
   }
 `;
 
-export const DetailViewCard = ({
-  href,
-  imgSrc,
-  headline,
-  text,
-}: DetailViewCardProps) => {
+export const DetailViewCard = ({ href, imgSrc, headline, text }: DetailViewCardProps) => {
   return (
     <StyledWrapper target="_blank" href={href} rel="noopener noreferrer">
       <Flex flexDirection="row" width="100%" gap={16}>
@@ -51,15 +42,12 @@ export const DetailViewCard = ({
               borderRadius: `${Borders.Radius.Container.Default}`,
             }}
           >
-            <img
-                src={imgSrc}
-                width="56px"
-              />
+            <img src={imgSrc} width="56px" alt={headline} />
           </Flex>
         </Flex>
         <Flex flexGrow={1} alignSelf={"center"} flexDirection="column" gap={4}>
-            <Heading level={6}>{headline}</Heading>
-            <Text>{text}</Text>
+          <Heading level={6}>{headline}</Heading>
+          <Text>{text}</Text>
         </Flex>
         <Flex justifyContent="center">
           <Flex alignSelf={"center"}>

@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient, } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Meta } from "../types/Meta";
 import { Macro, UpdateMode } from "../types/Types";
 import { stateClient } from "@dynatrace-sdk/client-state";
@@ -42,8 +42,8 @@ export const useAddMacro = () => {
   };
 
   return useMutation({
-    mutationFn: (variables:{formData: FormData, macro?: Macro}) => {
-        const {formData, macro}:{formData: FormData, macro?: Macro} = variables;
+    mutationFn: (variables: { formData: FormData; macro?: Macro }) => {
+      const { formData, macro }: { formData: FormData; macro?: Macro } = variables;
       return addMacro(formData, macro);
     },
     mutationKey: ["macros"],

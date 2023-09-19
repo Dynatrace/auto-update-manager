@@ -2,7 +2,7 @@ import React from "react";
 import { ProgressCircle, InformationOverlay } from "@dynatrace/strato-components-preview";
 import { useHostGroupFromMacro } from "src/app/hooks/useHostGroupFromMacro";
 import { Macro, HostGroup } from "src/app/types/Types";
-import { Indicator } from "../../Indicator";
+import { Indicator } from "./Indicator";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
 import { testMaintenanceWindows, displayVersionFromSettings } from "src/app/utils/helperFunctions";
 
@@ -53,7 +53,6 @@ export const HostGroupCell = ({ macro }: { macro: Macro }) => {
     );
 
   if (compliantHostgroups.length < 1) {
-    // debugger;
     return (
       <Indicator state="critical">
         {compliantHostgroups.length} / {hostgroupsFromMacroResult.data.length} {hostgroupLimited}

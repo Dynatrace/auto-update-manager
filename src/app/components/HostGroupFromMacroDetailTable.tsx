@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   DataTable,
   ProgressCircle,
@@ -9,9 +9,9 @@ import {
   List,
 } from "@dynatrace/strato-components-preview";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
-import { Indicator } from "../Indicator";
-import { MaintenanceWindowCell } from "./cells/MaintenanceWindowCell";
-import { HostGroupLink } from "../links/HostGroupLink";
+import { Indicator } from "./Indicator";
+import { MaintenanceWindowCell } from "./MaintenanceWindowCell";
+import { HostGroupLink } from "./HostGroupLink";
 import { HostGroup, Macro } from "src/app/types/Types";
 import { useHostGroupFromMacro } from "src/app/hooks/useHostGroupFromMacro";
 import { testMaintenanceWindows } from "src/app/utils/helperFunctions";
@@ -33,6 +33,55 @@ export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetai
     else return match;
   }
 
+  const cols: TableColumn[] = useMemo(
+    () => [
+      {
+        header: "Hostgroup",
+        id: "hostgroup",
+        cell: ({ row }) => <HostGroupLink hostgroup={row.original} />,
+        autoWidth: true,
+        minWidth: 150,
+      },
+      {
+        header: "Update Mode",
+        id: "updateMode",
+        cell: ({ row }) => {
+          const updateMode = lookupSettings(row, "updateMode");
+          if (updateMode == "MANUAL") return <Indicator state="critical">{updateMode}</Indicator>;
+          else if (updateMode == macro.updateMode) return <>{updateMode}</>;
+          else return <Indicator state="warning">{updateMode}</Indicator>;
+        },
+      },
+      {
+        header: "Target Version",
+        id: "displayVersion",
+        cell: ({ row }) => {
+          const settings = lookupSettings(row);
+          const displayVersion = displayVersionFromSettings(settings);
+          if (displayVersion == macro.desiredVersion) return <>{displayVersion}</>;
+          else return <Indicator state="warning">{displayVersion}</Indicator>;
+        },
+      },
+      {
+        accessor: "value.maintenanceWindows",
+        header: "Update Windows",
+        cell: ({ row }) => {
+          const maintenanceWindows = lookupSettings(row, "maintenanceWindows");
+          if (testMaintenanceWindows(maintenanceWindows, macro.desiredWindow))
+            return <MaintenanceWindowCell windows={maintenanceWindows} />;
+          else {
+            return (
+              <Indicator state="warning">
+                <MaintenanceWindowCell windows={maintenanceWindows} />
+              </Indicator>
+            );
+          }
+        },
+      },
+    ],
+    []
+  );
+
   if (hostgroupsFromMacroResult.isError)
     return <Indicator state="critical">{(hostgroupsFromMacroResult.error || "").toString()}</Indicator>;
 
@@ -44,60 +93,12 @@ export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetai
     return <ProgressCircle size="small" aria-label="Loading..." />;
   }
 
-  const cols: TableColumn[] = [
-    {
-      header: "Hostgroup",
-      id: "hostgroup",
-      cell: ({ row }) => <HostGroupLink hostgroup={row.original} />,
-      autoWidth: true,
-      minWidth: 150,
-    },
-    {
-      header: "Update Mode",
-      id: "updateMode",
-      cell: ({ row }) => {
-        const updateMode = lookupSettings(row, "updateMode");
-        if (updateMode == "MANUAL") return <Indicator state="critical">{updateMode}</Indicator>;
-        else if (updateMode == macro.updateMode) return <>{updateMode}</>;
-        else return <Indicator state="warning">{updateMode}</Indicator>;
-      },
-    },
-    {
-      header: "Target Version",
-      id: "displayVersion",
-      cell: ({ row }) => {
-        const settings = lookupSettings(row);
-        const displayVersion = displayVersionFromSettings(settings);
-        if (displayVersion == macro.desiredVersion) return <>{displayVersion}</>;
-        else return <Indicator state="warning">{displayVersion}</Indicator>;
-      },
-    },
-    {
-      accessor: "value.maintenanceWindows",
-      header: "Update Windows",
-      // cell: ({ value }) => <MaintenanceWindowCell windows={value} />,
-      cell: ({ row }) => {
-        const maintenanceWindows = lookupSettings(row, "maintenanceWindows");
-        if (testMaintenanceWindows(maintenanceWindows, macro.desiredWindow))
-          return <MaintenanceWindowCell windows={maintenanceWindows} />;
-        else {
-          // console.log("maintenanceWindows:",JSON.stringify(maintenanceWindows||[]),JSON.stringify([{maintenanceWindow:macro.desiredWindow}]))
-          return (
-            <Indicator state="warning">
-              <MaintenanceWindowCell windows={maintenanceWindows} />
-            </Indicator>
-          );
-        }
-      },
-    },
-  ];
   const hgWithSettings = hostgroupsFromMacroResult.data.filter(
     (hg) => hostGroupsFromSettingsResult?.data?.find((so) => so.scope == hg.id) != undefined
   );
   const hgWithoutSettings = hostgroupsFromMacroResult.data.filter(
     (hg) => hostGroupsFromSettingsResult?.data?.find((so) => so.scope == hg.id) == undefined
   );
-  // debugger;
   return (
     <Flex flexDirection="column">
       <DataTable columns={cols} data={hgWithSettings} fullWidth>

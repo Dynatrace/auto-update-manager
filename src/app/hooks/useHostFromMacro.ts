@@ -17,7 +17,7 @@ async function fetcher(macro: Macro) {
     body: {
       query,
       requestTimeoutMilliseconds: 5000,
-      maxResultRecords: 1000
+      maxResultRecords: 1000,
     },
   });
   if (res.result?.records) {

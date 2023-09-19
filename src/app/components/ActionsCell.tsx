@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Button, Flex, ProgressCircle, Menu, Modal, Text } from "@dynatrace/strato-components-preview";
 import { CycleIcon, DotMenuIcon, DeleteIcon, EditIcon, GhostIcon } from "@dynatrace/strato-icons";
-// import { useMacros } from "src/app/hooks/useMacros";
 import { useRemoveMacro } from "src/app/hooks/useRemoveMacro";
 import { Macro } from "src/app/types/Types";
 import { useSyncSettingsFromMacro } from "src/app/hooks/useSyncSettingsFromMacro";
-import { Indicator } from "../../Indicator";
+import { Indicator } from "./Indicator";
 import { useClearHostgroupsFromMacro } from "src/app/hooks/useClearHostgroupsFromMacro";
-import { MacroModal } from "../../modals/MacroModal";
+import { MacroModal } from "./MacroModal";
 
 export const ActionsCell = ({ macro }: { macro: Macro }) => {
   const [showSyncModal, setShowSyncModal] = useState(false);
