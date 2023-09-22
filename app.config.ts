@@ -2,7 +2,7 @@ import type { CliOptions } from "dt-app";
 
 const config: CliOptions = {
   // CHANGE THIS TO POINT TO YOUR ENVIRONMENT:
-  environmentUrl: "https://umsaywsjuo.dev.apps.dynatracelabs.com/",
+  environmentUrl: "https://xxxxxxx.apps.dynatrace.com/",
   icon: "src/assets/Au.png",
   app: {
     name: "AutoUpdate Manager",
