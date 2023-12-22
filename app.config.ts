@@ -5,7 +5,7 @@ const config: CliOptions = {
   environmentUrl: "https://xxxxxxx.apps.dynatrace.com/",
   icon: "src/assets/Au.png",
   app: {
-    name: "AutoUpdate Manager",
+    name: "AutoUpdate Manager Sample",
     version: "0.0.22",
     description: "A Sample App which enables controlling AutoUpdate at large scale",
     id: "my.auto.update.manager",
