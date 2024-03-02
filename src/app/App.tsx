@@ -62,7 +62,7 @@ export const App = () => {
           <Flex flexDirection="row" alignItems="center">
             <Flex flexDirection="column" gap={16}>
               <Flex gap={4} flexDirection="column">
-                <Heading>AutoUpdate Manager</Heading>
+                <Heading>AutoUpdate Manager Sample</Heading>
                 {!hideAds && (
                   <Text>
                     This Sample App enables you to control your OneAgent <AutoUpdateTerminology /> settings per host

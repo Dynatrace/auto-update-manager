@@ -1,4 +1,4 @@
-# AutoUpdate Manager
+# AutoUpdate Manager Sample 
 This Sample App enables you to control your OneAgent AutoUpdate settings per host group at large scale. It introduces the concept of "macros" as meta-configuration to enable automation-assisted tasks.
 
 ## This app demonstrates
