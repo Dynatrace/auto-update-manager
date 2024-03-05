@@ -46,6 +46,7 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
       {
         header: "Update Mode",
         id: "updateMode",
+        autoWidth: true,
         cell: ({ row }) => {
           const updateMode = lookupSettings(row, "updateMode");
           if (updateMode === "MANUAL") return <Indicator state="critical">{updateMode}</Indicator>;
@@ -56,6 +57,7 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
       {
         header: "Target Version",
         id: "displayVersion",
+        autoWidth: true,
         cell: ({ row }) => {
           const settings = lookupSettings(row);
           const displayVersion = displayVersionFromSettings(settings);
@@ -66,6 +68,7 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
       {
         accessor: "value.maintenanceWindows",
         header: "Update Windows",
+        autoWidth: true,
         cell: ({ row }) => {
           const maintenanceWindows = lookupSettings(row, "maintenanceWindows");
           if (testMaintenanceWindows(maintenanceWindows, macro.desiredWindow))
