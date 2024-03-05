@@ -29,7 +29,7 @@ export const HostFromMacroDetailTable = ({ macro }: HostFromMacroDetailTableProp
   function lookupSettings(row, value?: string) {
     const host: Host = row.original;
     const match = hostsFromSettingsResult?.data?.find((so) => so.scope == host.id);
-    if (value) return match?.value[value];
+    if (value) return match?.value?.[value];
     else return match;
   }
 

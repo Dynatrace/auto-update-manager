@@ -6,7 +6,7 @@ const config: CliOptions = {
   icon: "src/assets/Au.png",
   app: {
     name: "AutoUpdate Manager Sample",
-    version: "0.0.22",
+    version: "0.0.23",
     description: "A Sample App which enables controlling AutoUpdate at large scale",
     id: "my.auto.update.manager",
     scopes: [

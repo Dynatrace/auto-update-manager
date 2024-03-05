@@ -8,7 +8,8 @@ import {
   Page,
   useCurrentTheme,
   Button,
-} from "@dynatrace/strato-components-preview/";
+} from "@dynatrace/strato-components-preview";
+
 import { DetailViewCard } from "./components/DetailViewCard";
 import { MainViewCard } from "./components/MainViewCard";
 import { AutoUpdateTerminology } from "./components/AutoUpdateTerminology";

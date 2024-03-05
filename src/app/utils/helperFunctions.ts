@@ -7,7 +7,7 @@ const testMaintenanceWindows = (windows = [], window: string) => {
 };
 
 const displayVersionFromSettings = (settings: SettingsObject) => {
-  if (settings.value.targetVersion == undefined) return "";
+  if (settings.value?.targetVersion == undefined) return "";
   if (settings.value.targetVersion.startsWith("1.")) {
     if (typeof settings.value.revision == "string" && settings.value.revision.match(/[0-9\.]+/))
       return settings.value.targetVersion + "." + settings.value.revision;

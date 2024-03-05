@@ -30,14 +30,14 @@ export const HostCell = ({ macro }: { macro: Macro }) => {
   for (const hostws of hostsWithSettings) {
     const settings = hostsFromSettingsResult?.data?.find((so) => so.scope == hostws.id);
     if (
-      settings?.value.updateMode == macro.updateMode &&
+      settings?.value?.updateMode == macro.updateMode &&
       displayVersionFromSettings(settings) == macro.desiredVersion &&
       testMaintenanceWindows(settings?.value.maintenanceWindows, macro.desiredWindow)
     )
       compliantHosts.push(hostws);
   }
   if (
-    envSettings.data[0].value.updateMode == macro.updateMode &&
+    envSettings.data[0].value?.updateMode == macro.updateMode &&
     envSettings.data[0].value.targetVersion == macro.desiredVersion &&
     testMaintenanceWindows(envSettings.data[0].value.maintenanceWindows, macro.desiredWindow)
   )
