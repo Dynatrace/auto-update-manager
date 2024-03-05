@@ -21,11 +21,11 @@ export const MaintenanceWindowCell = ({ windows, window }: MaintenanceWindowCell
     windowNames.push(
       ...windows?.map((w) =>
         w.maintenanceWindow !== undefined
-          ? data?.find((d) => d.objectId == w.maintenanceWindow)?.value.name || w.maintenanceWindow
+          ? data?.find((d) => d.objectId == w.maintenanceWindow)?.value?.name || w.maintenanceWindow
           : ""
       )
     );
-  if (typeof window == "string" && window.length) windowNames.push(data.find((d) => d.objectId == window)?.value.name);
+  if (typeof window == "string" && window.length) windowNames.push(data.find((d) => d.objectId == window)?.value?.name);
 
   return <>{windowNames.join(", ")}</>;
 };

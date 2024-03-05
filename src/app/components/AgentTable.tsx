@@ -9,6 +9,7 @@ import {
   FilterItemValues,
   SelectOption,
   TableColumn,
+  SelectedKeys,
 } from "@dynatrace/strato-components-preview";
 import { useOneAgentOnAHost } from "src/app/hooks/useOneAgentOnAHost";
 import { Indicator } from "./Indicator";
@@ -18,8 +19,14 @@ import { useOutdatedAgents } from "src/app/hooks/useOutdatedAgents";
 
 const SafetyCell = ({ value }) => {
   const jsonval = useMemo(() => JSON.stringify(value), [value]);
-  return <>{typeof value == "object" ? jsonval : value}</>;
+  return <DataTable.Cell>{typeof value == "object" ? jsonval : value}</DataTable.Cell>;
 };
+
+const typeGuardSelectedKeys = (selectedKeys:SelectedKeys|null): "faulty" | "unsupported" | "older" | null => {
+  const key = (selectedKeys || [])[0] || null;
+  if(key === "faulty" || key === "unsupported" || key === "older")return key;
+  else return null;
+}
 
 interface AgentTableProps {
   agentSpecialFilter: "faulty" | "unsupported" | "older" | null;
@@ -107,16 +114,17 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
 
   const cols: TableColumn[] = useMemo(
     () => [
-      { header: "Status", accessor: "updateStatus", cell: SafetyCell, autoWidth: true, minWidth: 160 },
+      { header: "Status", accessor: "updateStatus", cell: SafetyCell, ratioWidth: 1, minWidth: 160 },
       {
         header: "Version",
         accessor: "hostInfo.agentVersion",
+        ratioWidth: 1,
         cell: ({ value }) => agentVersionToString(value),
       },
-      { header: "Name", accessor: "hostInfo.displayName", cell: SafetyCell },
-      { header: "Hostgroup", accessor: "hostInfo.hostGroup.name", cell: SafetyCell },
-      { header: "OS", accessor: "hostInfo.osType", cell: SafetyCell, autoWidth: true },
-      { header: "NetZone", accessor: "currentNetworkZoneId", cell: SafetyCell },
+      { header: "Name", accessor: "hostInfo.displayName", ratioWidth: 2, cell: SafetyCell },
+      { header: "Hostgroup", accessor: "hostInfo.hostGroup.name", ratioWidth: 1, cell: SafetyCell },
+      { header: "OS", accessor: "hostInfo.osType", ratioWidth: 1, cell: SafetyCell },
+      { header: "NetZone", accessor: "currentNetworkZoneId", ratioWidth: 1, cell: SafetyCell },
     ],
     []
   );
@@ -188,7 +196,7 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
             selectedId={agentSpecialFilter != null ? [agentSpecialFilter] : []}
             name="specialFilter"
             id="specialFilter-select"
-            onChange={(selectedKeys) => setAgentSpecialFilter((selectedKeys || [])[0] || null)}
+            onChange={(selectedKeys) => setAgentSpecialFilter(typeGuardSelectedKeys(selectedKeys))}
             clearable
           >
             <SelectOption key="faulty" id="faulty">
@@ -203,7 +211,7 @@ export const AgentTable = ({ agentSpecialFilter, setAgentSpecialFilter }: AgentT
           </Select>
         </FilterBar.Item>
       </FilterBar>
-      <DataTable data={filteredData} columns={cols} sortable lineWrap fullWidth>
+      <DataTable data={filteredData} columns={cols} sortable>
         <DataTable.Pagination defaultPageSize={10} />
       </DataTable>
     </Flex>

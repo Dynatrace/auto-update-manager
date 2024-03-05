@@ -10,8 +10,8 @@ export const EnvironmentTable = () => {
   const cols: TableColumn[] = useMemo(
     () => [
       { accessor: "scope", header: "Scope", autoWidth: true },
-      { accessor: "value.updateMode", header: "Update Mode" },
-      { accessor: "value.targetVersion", header: "Target Version" },
+      { accessor: "value.updateMode", header: "Update Mode", autoWidth: true },
+      { accessor: "value.targetVersion", header: "Target Version", autoWidth: true },
       {
         accessor: "value.maintenanceWindows",
         header: "Update Windows",
