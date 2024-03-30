@@ -23,7 +23,7 @@ const SafetyCell = ({ value }) => {
 };
 
 const typeGuardSelectedKeys = (selectedKeys:SelectedKeys|null): "faulty" | "unsupported" | "older" | null => {
-  const key = (selectedKeys || [])[0] || null;
+  const key = selectedKeys?.[0] ?? null;
   if(key === "faulty" || key === "unsupported" || key === "older")return key;
   else return null;
 }
