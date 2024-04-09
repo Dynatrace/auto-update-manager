@@ -1,4 +1,5 @@
 import React, { useState, useRef, FormEvent } from "react";
+import { queryAssistanceClient } from "@dynatrace-sdk/client-query";
 import {
   Modal,
   Flex,
@@ -18,13 +19,15 @@ import {
   RadioGroup,
   Radio,
 } from "@dynatrace/strato-components-preview";
-import { PlusIcon, EditIcon, ErrorIcon } from "@dynatrace/strato-icons";
+import { PlusIcon, EditIcon, CriticalFailedIcon, CheckmarkIcon } from "@dynatrace/strato-icons";
+import Colors from "@dynatrace/strato-design-tokens/colors";
 import { useVersions } from "src/app/hooks/useVersions";
 import { useSettingsReader } from "src/app/hooks/useSettingsReader";
 import { useMacros } from "src/app/hooks/useMacros";
 import { useAddMacro } from "src/app/hooks/useAddMacro";
 import { Indicator } from "./Indicator";
 import { Macro } from "src/app/types/Types";
+import "./MacroModal.css";
 
 type MacroModalProps = {
   modalMode: "Add" | "Update" | null;
@@ -32,10 +35,18 @@ type MacroModalProps = {
   macro?: Macro;
 };
 
+const criticalFailedStyle: React.CSSProperties = {
+  fill: Colors.Icon.Critical.Default,
+};
+const successStyle: React.CSSProperties = {
+  fill: Colors.Icon.Success.Default,
+};
+
 export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => {
   const [name, setName] = useState<string>(macro ? macro.name : "");
   const [dupName, setDupName] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>(macro ? macro.filter : `in(tags,"poland-windows-host")`);
+  const [filterValid, setFilterValid] = useState<boolean>(true);
   const [desiredVersionKeys, setDesiredVersionKeys] = useState<SelectedKeys | null>(
     macro ? [macro.desiredVersion] : null
   );
@@ -48,6 +59,15 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
   const formRef = useRef<HTMLFormElement>(null);
   const macros = useMacros();
   const { mutate: addMacro } = useAddMacro();
+
+  async function onFilterChange(filter: string) {
+    setFilter(filter);
+    const query = `fetch dt.entity.host |filter ${filter}`;
+    const response = await queryAssistanceClient.queryVerify({
+      body: { query },
+    });
+    setFilterValid(response.valid);
+  }
 
   async function submit(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault();
@@ -93,14 +113,13 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
                 <Code>|Filter </Code>
               </Flex>
               <Flex flexItem flexGrow={1}>
-                <TextInput
-                  placeholder="DQL Filter"
-                  value={filter}
-                  name="filter"
-                  onChange={(val) => {
-                    setFilter(val);
-                  }}
-                />
+                <TextInput placeholder="DQL Filter" value={filter} name="filter" onChange={onFilterChange}>
+                  <TextInput.Prefix>
+                    {(!filterValid && <CriticalFailedIcon style={criticalFailedStyle} />) || (
+                      <CheckmarkIcon style={successStyle} />
+                    )}
+                  </TextInput.Prefix>
+                </TextInput>
               </Flex>
               <Flex flexItem>
                 <InformationOverlay>
@@ -140,7 +159,7 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
 
           <FormField label="Version" required>
             {versions.isLoading && <ProgressCircle size="small" aria-label="Loading..." />}
-            {versions.isError && <ErrorIcon />}
+            {versions.isError && <CriticalFailedIcon style={criticalFailedStyle} />}
             {!versions.isLoading && !versions.isError && (
               <Select
                 name="desiredVersion"
@@ -174,7 +193,7 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
           </FormField>
           <FormField label="Window">
             {windows.isLoading && <ProgressCircle size="small" aria-label="Loading..." />}
-            {windows.isError && <ErrorIcon />}
+            {windows.isError && <CriticalFailedIcon style={criticalFailedStyle} />}
             {!windows.isLoading && !windows.isError && (
               <Select
                 name="desiredWindow"
@@ -199,7 +218,11 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
           </FormField>
           <Flex flexDirection="row" justifyContent="flex-end" alignItems="center">
             {modalMode == "Add" && (
-              <Button variant="emphasized" type="submit" disabled={dupName || name.length < 1 || filter.length < 1}>
+              <Button
+                variant="emphasized"
+                type="submit"
+                disabled={dupName || name.length < 1 || filter.length < 1 || !filterValid}
+              >
                 <Button.Prefix>
                   <PlusIcon />
                 </Button.Prefix>
@@ -207,7 +230,11 @@ export const MacroModal = ({ modalMode, onDismiss, macro }: MacroModalProps) => 
               </Button>
             )}
             {modalMode == "Update" && (
-              <Button variant="emphasized" type="submit" disabled={name.length < 1 || filter.length < 1}>
+              <Button
+                variant="emphasized"
+                type="submit"
+                disabled={name.length < 1 || filter.length < 1 || !filterValid}
+              >
                 <Button.Prefix>
                   <EditIcon />
                 </Button.Prefix>

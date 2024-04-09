@@ -29,7 +29,7 @@ export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetai
   function lookupSettings(row, value?: string) {
     const hg: HostGroup = row.original;
     const match = hostGroupsFromSettingsResult?.data?.find((so) => so.scope == hg.id);
-    if (value) return match?.value[value];
+    if (value) return match?.value?.[value];
     else return match;
   }
 
@@ -45,6 +45,7 @@ export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetai
       {
         header: "Update Mode",
         id: "updateMode",
+        autoWidth: true,
         cell: ({ row }) => {
           const updateMode = lookupSettings(row, "updateMode");
           if (updateMode == "MANUAL") return <Indicator state="critical">{updateMode}</Indicator>;
@@ -55,6 +56,7 @@ export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetai
       {
         header: "Target Version",
         id: "displayVersion",
+        autoWidth: true,
         cell: ({ row }) => {
           const settings = lookupSettings(row);
           const displayVersion = displayVersionFromSettings(settings);
@@ -65,6 +67,7 @@ export const HostGroupFromMacroDetailTable = ({ macro }: HostGroupFromMacroDetai
       {
         accessor: "value.maintenanceWindows",
         header: "Update Windows",
+        autoWidth: true,
         cell: ({ row }) => {
           const maintenanceWindows = lookupSettings(row, "maintenanceWindows");
           if (testMaintenanceWindows(maintenanceWindows, macro.desiredWindow))
